@@ -1,11 +1,13 @@
 
+// Attempting to test Expenses.
 public class exampleClass {
-
-
-	public static void main(String Args) {
-		System.out.println("This works.");
-		int i = 0;
+static calculations Calc;
+	public static void main(String[] Args) {
+		Calc.expense("Test", 42.0);
 	}
+	
+	
+	
 
 
 }

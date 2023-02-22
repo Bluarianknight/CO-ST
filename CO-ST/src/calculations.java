@@ -1,12 +1,11 @@
 
 public class calculations {
-	int cost;
-	int income;
-	int total; 
 	
 	
-	public void expense()
+	// Attempting to set a new expense for calculations.
+	// Not working atm.
+	public Expense expense(String Name, double Cost)
 	{
-		
+		return new Expense(Name, Cost);
 	}
 }
