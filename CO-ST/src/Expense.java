@@ -18,4 +18,12 @@ public class Expense {
 		name = newName;
 		value = newValue;
 	} 
+	// Returns the value of the expense.
+	public double returnValue() {
+		return value;
+	}
+	// Returns the name of the expense.
+	public String returnName() {
+		return name;
+	}
 }
