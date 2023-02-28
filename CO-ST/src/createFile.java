@@ -2,7 +2,7 @@ import java.io.File;  // Import the File class
 import java.io.IOException;
 import java.io.FileWriter;
 
-//this class will create the file that we going to use to store and caterogize the expenses
+//this class will create the file that we going to use to store and categorize the expenses
 
 
 public class createFile {

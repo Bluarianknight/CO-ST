@@ -4,18 +4,15 @@ public class exampleClass {
 
 	public static void main(String[] Args) {
 		// Sets up a new calculations for calculating expenses, and sets two expenses to return the total expense. Works.
-		calculations Calc = new calculations();
-		Expense Car = new Expense();
-		Car.setName("Car");
-		Car.setValue(12.0);
+		costMonth newMonth = new costMonth();
 		
-		Expense Cat = new Expense();
-		Cat.setName("Cat");
-		Cat.setValue(55.0);
+		newMonth.newExpense("Cat", 25.00);
+		newMonth.newExpense("Car", 550.00);
 		
-		Calc.inputExpense(Cat);
-		Calc.inputExpense(Car);
-		System.out.println(Calc.returnTotalExpense());
+		newMonth.newIncome("Doordash", 55, 7);
+		
+		newMonth.findExpense("Car");
+		newMonth.showBalance();
 		
 	}
 	
