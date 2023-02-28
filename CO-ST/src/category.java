@@ -106,7 +106,7 @@ public class category {
 
                 default:
                 System.out.println("PLease choose within given categories");
-                flag = true;
+                continue;
                 
             }
 
