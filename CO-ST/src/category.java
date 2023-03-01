@@ -23,34 +23,32 @@ public class category {
     double sumEntertainment = 0;
     double totalexpense = 0;
 
-    /* 
-    ArrayList<Double> housing = new ArrayList<Double>();
-    ArrayList<Double> utilities = new ArrayList<Double>();
-    ArrayList<Double> groceries = new ArrayList<Double>();
-    ArrayList<Double> personal = new ArrayList<Double>();
-    ArrayList<Double> entertainment = new ArrayList<Double>();
-    */
 
+    // this method let user choose with category the expenses going to be saved in.
+    // this method will write the expenses and save it into the file in choosen category.
     public void chooseCategory(String expense){
     
-        do{
-            System.out.println("housing(0), utilities(1), groceries(2), personal(3), entertainment(4)");
+        do{ 
+            // this loop will keep looping if the user put in invalid input.
+            // this loop has a flag that is set to true and will run until the flag turn false.
+
+            System.out.println("housing(0), utilities(1), groceries(2), personal(3), entertainment(4)"); //Asking a user which category the expenses going to be saved in.
             System.out.print("");
 
-            switch (scnr.nextInt()){
+            switch (scnr.nextInt()){ //the switch case will evaluate user input to choose which category file will be used to save the expensesaved.
 
                 case 0:
-                try {
-                    FileWriter myWriter = new FileWriter("housing.txt", true);
-                    myWriter.write("\n");
-                    myWriter.write(expense);
-                    myWriter.close();
-                } catch (IOException e) {
+                try { // will try to execute this block of code.
+                    FileWriter myWriter = new FileWriter("housing.txt", true); // Define and open a file that will be written in. in this case "housing.txt".The append is set to true so it will add data instead of overwriting it.
+                    myWriter.write("\n"); // add a new line before adding new data.
+                    myWriter.write(expense);  // write the data that will be saved in the file.                                                   
+                    myWriter.close();         //close the file.
+                } catch (IOException e) {     // if its failed this block of code will be execute instead.
                     System.out.println("An error occurred.");
                     e.printStackTrace();
                 }
-                flag = false;
-                break;
+                flag = false; // the flag value to false thus will break the do while loop.
+                break;        // break out from switch case.
 
                 case 1:
                 try {
@@ -105,35 +103,32 @@ public class category {
                 break;
 
                 default:
-                System.out.println("PLease choose within given categories");
-                continue;
+                System.out.println("PLease choose within given categories"); // in case that the user key in invalid input, this will be print out.
+                continue; // instead of breaking out from the switch statement, continue will start the do while loop all over again.
                 
             }
 
-            System.out.print("Add more expenses y/n : ");
-            String answer = scnr2.nextLine();
-            
-            if (answer.equals("y"))
-                flag = true;
-            else
-                flag = false;
             
         }while (flag == true);
 
     }
 
+
+    // this method will get the sum of expenses in each of the categories.
+    // this method will read the expensess in the file and calculate the sum of each category.
+
     public void getSumCategory(){
         try{
 
-            DecimalFormat ft2 = new DecimalFormat("#.##");
+
             //////////////read housing file//////////////////////
-            File housingFile = new File("housing.txt");
-            Scanner readHouse = new Scanner(housingFile);
-            while(readHouse.hasNextLine()) {
-                double dataHouse = readHouse.nextDouble();
-                sumHousing += dataHouse;
+            File housingFile = new File("housing.txt"); // open the file that mentioned in the pathman so it can be read.
+            Scanner readHouse = new Scanner(housingFile);        // using scanner class to read the file.
+            while(readHouse.hasNextLine()) {                     // while the file has a line, the code will keep reading the next line until no line left.
+                double dataHouse = readHouse.nextDouble();       // though the input of the is in string, it can be read out as other data type as long as it valid, in this case double.
+                sumHousing += dataHouse;                         // adding up the data of each line to get the sum of expenses in the category.
             }
-            System.out.printf("housing : $ %.2f\n", sumHousing);
+            System.out.printf("housing : $ %.2f\n", sumHousing); // print out the sum of the category in such format($##.##)
             readHouse.close();
 
             //////////////read utilities/////////////////////////
@@ -183,7 +178,8 @@ public class category {
           }
     }
 
-            //////////////get percentage/////////////////////////
+    
+    // this methoed will calculate the percentage of the total expenses by the category
     public void getPercentages(){
 
         try{
@@ -239,11 +235,11 @@ public class category {
             e.printStackTrace();
           }
         
-        DecimalFormat ft = new DecimalFormat("#.##");
-        totalexpense = sumHousing + sumGroceries + sumUtilities + sumPersonal + sumEntertainment;
+        DecimalFormat ft = new DecimalFormat("#.##"); //DecimalFormat class is used to easlly setup the format that is going to be used later in the code block.
+        totalexpense = sumHousing + sumGroceries + sumUtilities + sumPersonal + sumEntertainment; // adding up all of the expenses from all category.
 
-        double perHousing = sumHousing/totalexpense*100;
-        System.out.println("Housing : " + ft.format(perHousing) + "%");
+        double perHousing = sumHousing/totalexpense*100;  // dividing the sum of the category by the total and multiply it by 100 to get the percentage of each category.
+        System.out.println("Housing : " + ft.format(perHousing) + "%");  // print out the percentage of the category in such format (##.##$%)
         double perGroceries = sumGroceries/totalexpense*100;
         System.out.println("Groceries : " + ft.format(perGroceries) + "%");
         double perUtilities = sumUtilities/totalexpense*100;
