@@ -1,7 +1,9 @@
 // LocalDate and Month will be used to help keep track of the current date - useful for income calculations, and knowing what month it is in general. 
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.Month;
+import java.util.Scanner;
 
 public class costMonth {
 	
@@ -13,6 +15,7 @@ public class costMonth {
 	
 	// Set values for use in dates.
 	LocalDate setDate;
+	LocalTime setTime = LocalTime.now();
 	int setDay;
 	Month setMonth;
 	int setYear;
@@ -27,11 +30,13 @@ public class costMonth {
 		setMonth = theDate.returnMonth();
 		setYear = theDate.returnYear();
 		lastCheckDate = theDate.returnDate();
+		
+		this.startUp();
 	}
 	
 	// Create a new expense in the monthExpenses object.
-	public void newExpense(String newName, double newValue) {
-		monthExpenses.newExpense(newName, newValue);
+	public void newExpense(String newName, double newValue, String newCategory) {
+		monthExpenses.newExpense(newName, newValue, newCategory);
 	}
 	
 	// Creates a new income in the monthIncome object. 
@@ -44,7 +49,15 @@ public class costMonth {
 	public void findExpense(String Expense) {
 		String returnExpenseName = monthExpenses.findExpenseNames(Expense);
 		double returnExpenseCost = monthExpenses.findExpenseCost(Expense);
-		System.out.println("The Expense is: " + returnExpenseName + " and the cost is " + returnExpenseCost + ". "); 
+		String returnExpenseCategory = monthExpenses.findExpenseCategory(Expense);
+		System.out.println("The Expense is: " + returnExpenseName + " and the cost is " + returnExpenseCost + ", and the category is " + returnExpenseCategory + ". "); 
+	}
+	
+	public void findIncome(String Income) {
+		String returnIncomeName = monthIncome.findIncomeNames(Income);
+		double returnIncomeValue = monthIncome.findIncomeCost(Income);
+		double returnIncomeCycle = monthIncome.findIncomeLap(Income);
+		System.out.println("The income is: " + returnIncomeName + " and the value is " + returnIncomeValue + " and it pays out every " + returnIncomeCycle + " days.");
 	}
 	
 	// Returns the balance of income and expenses calculated together as a double.
@@ -56,6 +69,47 @@ public class costMonth {
 	// Prints out the balance. 
 	public void showBalance() {
 		System.out.println("The balance is currently: $" + getBalance());
+	}
+	
+	public void showDate() {
+		System.out.println(setDate);
+	}
+	// Provides a start up that the month will have. Temporary.
+	public void startUp() {
+		System.out.println("Welcome to the CO-ST Financial Manager!");
+		System.out.println("The date is " + setDate + " and it is " + setTime + ". ");
+		this.demoStart();
+	}
+	// Shows off what is done so far in a fun matter. Will be removed.
+	public void demoStart() {
+		System.out.println("This demo will show you the current features of our product!");
+		Scanner newScan = new Scanner(System.in);
+		System.out.println("Please provide the name of your job, or income stream!");
+		String newJob = newScan.nextLine();
+		System.out.println("Wonderful! Please provide the amount of money you make from that income!");
+		double newValue = newScan.nextDouble();
+		System.out.println("Great! Lastly, please provide the amount of days between each pay cycle, via a numerical value!");
+		double newCycle = newScan.nextDouble();
+		this.newIncome(newJob, newValue, newCycle);
+		findIncome(newJob);
+		newScan.nextLine();
+		System.out.println();
+		System.out.println("Now, let's now make an expense!");
+		System.out.println("Please provide the name of the expense.");
+		String newExpense = newScan.nextLine();
+		System.out.println("Please provide the cost of the expense!");
+		double newExpenseValue = newScan.nextDouble();
+		newScan.nextLine();
+		System.out.println("Lastly, please provide the category of the expense, between these five choices; ");
+		System.out.println("housing, utilities, groceries, personal, entertainment");
+		String newExpenseCategory = newScan.nextLine();
+		this.newExpense(newExpense, newExpenseValue, newExpenseCategory);
+		this.findExpense(newExpense);
+		System.out.println();
+		System.out.println("Let's now check our balance!");
+		this.showBalance();
+		System.out.println();
+		
 	}
 	
 	

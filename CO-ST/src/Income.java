@@ -28,7 +28,7 @@ public class Income extends BaseCash {
 			return findCostNamesLocation(What);
 	}
 	
-	// Returns the name of a value if it exists. No idea why this exists.
+	// Returns the name of a value if it exists. It only exists for use for findExpense in costMonth.
 	public String findIncomeNames(String What) {
 		return totalCostNames.get(findIncomeNamesLocation(What));
 	}

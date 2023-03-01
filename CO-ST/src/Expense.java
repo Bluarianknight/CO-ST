@@ -9,9 +9,10 @@ public class Expense extends BaseCash {
 		
 	}
 	// Adds a new expense, taking a String and double value for cost and name.
-	public void newExpense(String newName, double newCost) {
+	public void newExpense(String newName, double newCost, String newCategory) {
 		totalCost.add(newCost);
 		totalCostNames.add(newName);
+		setCategory(newCategory);
 	}
 	
 	// Returns the variable of CostValue at Where.
@@ -24,12 +25,16 @@ public class Expense extends BaseCash {
 		return super.returnCostName(Where);
 	}
 	
+	public String returnExpenseCategory(int Where) {
+		return expenseCategory.get(Where);
+	}
+	
 	// Uses findCostNamesLocation, refer to BaseCash for documentation.
 	public int findExpenseNamesLocation(String What) {
 			return findCostNamesLocation(What);
 	}
 	
-	// Returns the name of a value if it exists. Unsure why this exists.
+	// Returns the name of a value if it exists. It only exists for use for findExpense in costMonth.
 	public String findExpenseNames(String What) {
 		return totalCostNames.get(findExpenseNamesLocation(What));
 	}
@@ -37,6 +42,35 @@ public class Expense extends BaseCash {
 	// Returns the cost of the String What if it exists as an expense. 
 	public Double findExpenseCost(String What) {
 		return totalCost.get(findExpenseNamesLocation(What));
+	}
+	
+	// Returns the category of an expense if it exists.
+	public String findExpenseCategory(String What) {
+		return expenseCategory.get(findExpenseNamesLocation(What));
+	}
+	
+	// Sets the category. 
+	public void setCategory(String newCategory) {
+		switch (newCategory.toLowerCase()) {
+		case "housing":
+			
+		case "utilities":
+			
+		case "groceries":
+			
+		case "personal":
+		
+		case "entertainment":
+
+		case "other":
+			expenseCategory.add(newCategory.toLowerCase());
+			break;
+		
+		default:
+			System.out.println("System cannot categorize. Error.");
+			expenseCategory.add("ERROR");
+			break;
+		}
 	}
 	
 	
