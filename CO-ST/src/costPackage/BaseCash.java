@@ -1,3 +1,4 @@
+package costPackage;
 import java.util.ArrayList;
 
 // Sets up a base Class for both the Expense and Income classes. 

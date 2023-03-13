@@ -1,3 +1,4 @@
+package costPackage;
 import java.util.ArrayList;
 
 // Expense class made for expenses. Used BaseCash method for most of it - many of the methods are simply BaseCash methods but renamed, or tweaked.
