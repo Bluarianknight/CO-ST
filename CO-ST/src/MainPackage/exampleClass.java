@@ -1,3 +1,4 @@
+package MainPackage;
 import javax.swing.JFrame;
 
 import guiHandling.mainFrameSetter;
@@ -7,7 +8,7 @@ public class exampleClass {
 
 	public static void main(String[] Args) {
 		// Sets up a new calculations for calculating expenses, and sets two expenses to return the total expense. Works.
-		costMonth newMonth = new costMonth();
+		// costMonth newMonth = new costMonth();
 		JFrame frame = new mainFrameSetter();
 		frame.setTitle("Co-ST");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

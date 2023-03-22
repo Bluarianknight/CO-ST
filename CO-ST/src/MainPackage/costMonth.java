@@ -1,3 +1,4 @@
+package MainPackage;
 // LocalDate and Month will be used to help keep track of the current date - useful for income calculations, and knowing what month it is in general. 
 
 import java.time.LocalDate;
@@ -9,6 +10,7 @@ import costPackage.Expense;
 import costPackage.Income;
 import timePackage.costDate;
 
+
 public class costMonth {
 	
 	
@@ -16,6 +18,7 @@ public class costMonth {
 	Expense monthExpenses = new Expense();
 	Income monthIncome = new Income();
 	costDate theDate = new costDate();
+	category sorting = new category();
 	
 	// Set values for use in dates.
 	LocalDate setDate;
@@ -23,6 +26,8 @@ public class costMonth {
 	int setDay;
 	Month setMonth;
 	int setYear;
+	
+	int dateCheck;
 	
 	// To be used to calculate income - not in use yet.
 	LocalDate lastCheckDate;
@@ -35,8 +40,17 @@ public class costMonth {
 		setYear = theDate.returnYear();
 		lastCheckDate = theDate.returnDate();
 		
-		this.startUp();
 	}
+	
+	// Used for automated checking if this date has already been used. Will be used in costYear.
+	public void setCheck() {
+		dateCheck++;
+	}
+	// Used for checking if this month has been used. 
+	public int returnCheck() {
+		return dateCheck;
+	}
+	
 	
 	// Create a new expense in the monthExpenses object.
 	public void newExpense(String newName, double newValue, String newCategory) {
@@ -50,18 +64,20 @@ public class costMonth {
 	}
 	
 	// Prints out an expense based on the string entered.
-	public void findExpense(String Expense) {
+	public String findExpense(String Expense) {
 		String returnExpenseName = monthExpenses.findExpenseNames(Expense);
 		double returnExpenseCost = monthExpenses.findExpenseCost(Expense);
 		String returnExpenseCategory = monthExpenses.findExpenseCategory(Expense);
-		System.out.println("The Expense is: " + returnExpenseName + " and the cost is " + returnExpenseCost + ", and the category is " + returnExpenseCategory + ". "); 
+		String newString = "The Expense is: " + returnExpenseName + " and the cost is " + returnExpenseCost + ", and the category is " + returnExpenseCategory + ". "; 
+		return newString;
 	}
 	
-	public void findIncome(String Income) {
+	public String findIncome(String Income) {
 		String returnIncomeName = monthIncome.findIncomeNames(Income);
 		double returnIncomeValue = monthIncome.findIncomeCost(Income);
 		double returnIncomeCycle = monthIncome.findIncomeLap(Income);
-		System.out.println("The income is: " + returnIncomeName + " and the value is " + returnIncomeValue + " and it pays out every " + returnIncomeCycle + " days.");
+		String newString = "The income is: " + returnIncomeName + " and the value is " + returnIncomeValue + " and it pays out every " + returnIncomeCycle + " days.";
+		return newString;
 	}
 	
 	// Returns the balance of income and expenses calculated together as a double.
@@ -78,6 +94,11 @@ public class costMonth {
 	public void showDate() {
 		System.out.println(setDate);
 	}
+	
+	
+	
+	/*
+	
 	// Provides a start up that the month will have. Temporary.
 	public void startUp() {
 		System.out.println("Welcome to the CO-ST Financial Manager!");
@@ -116,7 +137,6 @@ public class costMonth {
 		
 	}
 	
-	
-	
+	*/
 
 }
