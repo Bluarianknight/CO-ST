@@ -95,7 +95,10 @@ public class costMonth {
 		System.out.println(setDate);
 	}
 	
-	
+	public void categorySave(String what) {
+		sorting.chooseCategory(monthExpenses.returnExpenseCategory(monthExpenses.findExpenseNamesLocation(what)));
+		
+	}
 	
 	/*
 	
