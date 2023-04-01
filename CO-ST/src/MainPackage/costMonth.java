@@ -4,10 +4,11 @@ package MainPackage;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.Month;
-import java.util.Scanner;
+
 
 import costPackage.Expense;
 import costPackage.Income;
+import costPackage.Savings;
 import timePackage.costDate;
 
 
@@ -19,7 +20,7 @@ public class costMonth {
 	Income monthIncome = new Income();
 	costDate theDate = new costDate();
 	category sorting = new category();
-	
+	Savings savings = new Savings();
 	// Set values for use in dates.
 	LocalDate setDate;
 	LocalTime setTime = LocalTime.now();
@@ -100,6 +101,19 @@ public class costMonth {
 		
 	}
 	
+	public double checkSavings(Savings saving) {
+		double save = saving.getSavings();
+		double balance = getBalance();
+		if (balance + save < 0) {
+			return save + balance;
+		} else if (balance < 0) {
+			return save + balance;
+		} else {
+			return save;
+		}
+		
+	}
+	}
 	/*
 	
 	// Provides a start up that the month will have. Temporary.
@@ -142,4 +156,4 @@ public class costMonth {
 	
 	*/
 
-}
+

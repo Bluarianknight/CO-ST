@@ -55,7 +55,7 @@ public class MainScreen extends JFrame implements ActionListener {
 		
 		JPanel middlepanel = new JPanel();
 		middlepanel.setLayout(new BorderLayout());
-		JLabel labelOne = new JLabel("For Testing");
+		// JLabel labelOne = new JLabel("For Testing");
 		
 		
 		JButton tButton = new JButton("Make Expense");

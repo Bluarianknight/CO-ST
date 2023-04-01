@@ -2,14 +2,14 @@ package guiHandling;
 
 import javax.swing.*;
 
-import java.awt.BorderLayout;
+
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JMenu;
+
 import javax.swing.JPanel;
 
 public class mainFrameSetter extends JFrame implements ActionListener {
@@ -65,7 +65,7 @@ public class mainFrameSetter extends JFrame implements ActionListener {
 			break;
 		
 		case "I agree.":
-			MainScreen main = new MainScreen();
+			@SuppressWarnings("unused") MainScreen main = new MainScreen();
 			this.dispose();
 			break;
 		

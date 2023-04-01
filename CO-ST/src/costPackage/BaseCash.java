@@ -24,13 +24,17 @@ public class BaseCash {
 	// Finds a variable in the array by searching for it's name. Will return 999 if not found - needs to be changed.
 	
 	public int findCostNamesLocation(String What) {
+		if (totalCostNames.size() == 0) {
+			return 0;
+		}
+		
 		for (int i = 0; i < totalCostNames.size(); i++) {
 			if (this.returnCostName(i).equalsIgnoreCase(What)) {
 				return i;
 			}
 				
 			}
-		return 999;
+		return 0;
 	}
 	
 	// Returns the size of an array. Used for testing.
