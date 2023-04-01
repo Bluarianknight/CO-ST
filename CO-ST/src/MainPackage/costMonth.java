@@ -73,11 +73,34 @@ public class costMonth {
 		return newString;
 	}
 	
+	public String findExpenseCount(int Number) {
+		String returnExpenseName = monthExpenses.returnExpenseName(Number);
+		double returnExpenseCost = monthExpenses.returnExpenseValue(Number);
+		String returnExpenseCategory = monthExpenses.returnExpenseCategory(Number);
+		String newString = Number + 1 + ": " + returnExpenseName + " $" + returnExpenseCost + ", Category: " + returnExpenseCategory + ". "; 
+		return newString;
+	}
+	public int findExpenseLength() {
+		return monthExpenses.returnExpenseLength();
+	}
+	public int findIncomeLength() {
+		return monthIncome.returnIncomeLength();
+	}
+
+	
 	public String findIncome(String Income) {
 		String returnIncomeName = monthIncome.findIncomeNames(Income);
 		double returnIncomeValue = monthIncome.findIncomeCost(Income);
 		double returnIncomeCycle = monthIncome.findIncomeLap(Income);
-		String newString = "The income is: " + returnIncomeName + " and the value is " + returnIncomeValue + " and it pays out every " + returnIncomeCycle + " days.";
+		String newString = returnIncomeName + " $" + returnIncomeValue + " and it pays out every " + returnIncomeCycle + " days.";
+		return newString;
+	}
+	
+	public String findIncomeCount(int Num) {
+		String returnIncomeName = monthIncome.returnIncomeName(Num);
+		double returnIncomeValue = monthIncome.returnIncomeValue(Num);
+		double returnIncomeCycle = monthIncome.countIncomeLap(Num);
+		String newString = Num + 1 + ": " + returnIncomeName + " $" + returnIncomeValue + ", Cycle: " + returnIncomeCycle + " days.";
 		return newString;
 	}
 	
@@ -94,6 +117,14 @@ public class costMonth {
 	
 	public void showDate() {
 		System.out.println(setDate);
+	}
+	
+	public void setSavings(double newSavings) {
+		savings.setSavings(newSavings);
+	}
+	
+	public double getSavings() {
+		return savings.getSavings();
 	}
 	
 	public void categorySave(String what) {

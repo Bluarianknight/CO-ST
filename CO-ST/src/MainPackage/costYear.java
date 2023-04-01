@@ -110,4 +110,25 @@ public class costYear {
 		return current.findIncome(newIncome);
 	}
 	
+	public String getExpenseCount(int Num) {
+		return current.findExpenseCount(Num);
+	}
+	
+	public String getIncomeCount(int Num) {
+		return current.findIncomeCount(Num);
+	}
+	
+	public int returnExpenseLength() {
+		return current.findExpenseLength();
+	}
+	
+	public int returnIncomeLength() {
+		return current.findIncomeLength();
+	}
+	public double getSavings() {
+		return current.getSavings();
+	}
+	public void setSavings(double Savings) {
+		current.setSavings(Savings);
+	}
 }

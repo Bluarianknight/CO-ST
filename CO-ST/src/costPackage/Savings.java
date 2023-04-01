@@ -7,7 +7,7 @@ public class Savings {
 		
 	}
 	
-	public void setSavings(int newNum) {
+	public void setSavings(double newNum) {
 		Saving = newNum;
 	}
 	

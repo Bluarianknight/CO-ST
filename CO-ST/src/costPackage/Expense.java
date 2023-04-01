@@ -30,6 +30,10 @@ public class Expense extends BaseCash {
 		return expenseCategory.get(Where);
 	}
 	
+	public int returnExpenseLength() {
+		return expenseCategory.size();
+	}
+	
 	// Uses findCostNamesLocation, refer to BaseCash for documentation.
 	public int findExpenseNamesLocation(String What) {
 			return findCostNamesLocation(What);

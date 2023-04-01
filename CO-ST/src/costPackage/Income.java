@@ -44,4 +44,12 @@ public class Income extends BaseCash {
 		return totalIncomeLap.get(findIncomeNamesLocation(What));
 	}
 	
+	public Double countIncomeLap(int What) {
+		return totalIncomeLap.get(What);
+	}
+	
+	public int returnIncomeLength() {
+		return totalIncomeLap.size();
+	}
+	
 }
