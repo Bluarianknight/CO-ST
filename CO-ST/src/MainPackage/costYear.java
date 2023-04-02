@@ -1,5 +1,8 @@
 package MainPackage;
-
+/*
+ * This class is the main controller, with it's intended purpose to save data continuously - switching between months automatically, with 'current' saving and loading
+ * features not implemented fully. Right now, it simply acts as a buffer.
+ */
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.Month;
@@ -130,5 +133,13 @@ public class costYear {
 	}
 	public void setSavings(double Savings) {
 		current.setSavings(Savings);
+	}
+	
+	public String getBalance() {
+		if (current.getBalance() > -1) {
+		return "$" + current.getBalance();
+		} else {
+			return "-$" + current.getBalance() * -1;
+		}
 	}
 }

@@ -45,7 +45,7 @@ public class BaseCash {
 	// Returns the total value of the entire array. Used for calculating balance in costMonth.
 	public double returnTotalCost() {
 		double total = 0.0;
-		for (int x = 0; x < totalCost.size() - 1; x++) {
+		for (int x = 0; x < totalCost.size(); x++) {
 			total += totalCost.get(x);
 			
 		}

@@ -6,7 +6,7 @@ public class Savings {
 		Saving = 0;
 		
 	}
-	
+	// This class is broken, doesn't work as intended.
 	public void setSavings(double newNum) {
 		Saving = newNum;
 	}
