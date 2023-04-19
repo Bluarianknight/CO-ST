@@ -6,6 +6,7 @@ package MainPackage;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.Month;
+import java.util.ArrayList;
 
 public class costYear {
 
@@ -141,5 +142,25 @@ public class costYear {
 		} else {
 			return "-$" + current.getBalance() * -1;
 		}
+	}
+	
+	public ArrayList<String> returnIncomeDisplayed() {
+		return current.incomeDisplay();
+	}
+	
+	public ArrayList<String> returnExpenseDisplayed() {
+		return current.expenseDisplay();
+	}
+	
+	public void removeExpense(int x) {
+		current.removeExpense(x);
+	}
+	
+	public void removeIncome(int x) {
+		current.removeIncome(x);
+	}
+	
+	public String calcIncomingIncome() {
+		return "$" + current.calcIncomingIncome();
 	}
 }

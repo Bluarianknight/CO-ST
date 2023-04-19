@@ -1,14 +1,20 @@
 package timePackage;
 import java.time.LocalDate;
 import java.time.Month;
+import java.time.YearMonth;
+
+
 // To be used to keep track of the days.
 public class costDate {
 
 	// Sets dates for the actual date, day, month, and year, in value.
 	LocalDate currentDate = LocalDate.now();
+	
 	int currentDay = currentDate.getDayOfMonth();
 	Month currentMonth = currentDate.getMonth();
 	int currentYear = currentDate.getYear();
+	YearMonth currentYearMonth = YearMonth.now();
+
 	
 	
 	// All methods below return the variables above. 
@@ -26,5 +32,14 @@ public class costDate {
 	
 	public int returnYear() {
 		return currentYear;
+	}
+	 
+	
+	public int remainderDays() {
+		int length = currentYearMonth.lengthOfMonth();
+		int days = currentDay;
+		
+		return length - days;
+		
 	}
 }

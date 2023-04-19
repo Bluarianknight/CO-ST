@@ -4,7 +4,7 @@ package MainPackage;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.Month;
-
+import java.util.ArrayList;
 
 import costPackage.Expense;
 import costPackage.Income;
@@ -144,6 +144,51 @@ public class costMonth {
 		}
 		
 	}
+	
+	public Expense returnExpense() {
+		return monthExpenses;
+	}
+	
+	public Income returnIncome() {
+		return monthIncome;
+	}
+	
+	public ArrayList<String> incomeDisplay() {
+		return monthIncome.returnDisplayedIncome();
+	}
+	
+	public ArrayList<String> expenseDisplay() {
+		return monthExpenses.returnDisplayed();
+	}
+	
+	public void removeIncome(int x) {
+		monthIncome.removeIncome(x);
+	}
+	
+	public void removeExpense(int x){
+		monthExpenses.expenseRemove(x);
+	}
+	
+	public double calcSingleIncomingIncome(int a) {
+		int x = 0;
+		for (double z = theDate.remainderDays(); z > monthIncome.countIncomeLap(a); z = z - monthIncome.countIncomeLap(a)) {
+			x += monthIncome.returnCostValue(a);
+		}
+		return x;
+	}
+	
+	public double calcIncomingIncome() {
+		int x = 0;
+		
+		for (int y = 0; y < monthIncome.returnIncomeLength(); y++) {
+			x += calcSingleIncomingIncome(y);
+		}
+		
+		return x;
+	}
+	
+	
+	
 	}
 	/*
 	

@@ -4,21 +4,26 @@ import java.util.ArrayList;
 // Expense class made for expenses. Used BaseCash method for most of it - many of the methods are simply BaseCash methods but renamed, or tweaked.
 public class Expense extends BaseCash {
 	// expenseCategory - to help sort the expenses. Not implemented fully currently.
-	ArrayList<String> expenseCategory = new ArrayList<String>();
+	private ArrayList<String> expenseCategory = new ArrayList<String>();
 	
 	public Expense (){
 		
 	}
 	// Adds a new expense, taking a String and double value for cost and name.
 	public void newExpense(String newName, double newCost, String newCategory) {
-		totalCost.add(newCost);
-		totalCostNames.add(newName);
+		this.setBase(newCost, newName);
 		setCategory(newCategory);
+		this.setDisplayed(" " + expenseCategory.size() + ": " + ": $" + newCost + " category: " + newCategory);
 	}
 	
 	// Returns the variable of CostValue at Where.
 	public double returnExpenseValue(int Where) {
 		return super.returnCostValue(Where);
+	}
+	
+	public void expenseRemove(int x) {
+		this.removeAt(x);
+		expenseCategory.remove(x);
 	}
 	
 	// Returns the variable of CostName at Where. 
@@ -41,12 +46,12 @@ public class Expense extends BaseCash {
 	
 	// Returns the name of a value if it exists. It only exists for use for findExpense in costMonth.
 	public String findExpenseNames(String What) {
-		return totalCostNames.get(findExpenseNamesLocation(What));
+		return getCostName(What);
 	}
 	
 	// Returns the cost of the String What if it exists as an expense. 
 	public Double findExpenseCost(String What) {
-		return totalCost.get(findExpenseNamesLocation(What));
+		return this.getCost(What);
 	}
 	
 	// Returns the category of an expense if it exists.
