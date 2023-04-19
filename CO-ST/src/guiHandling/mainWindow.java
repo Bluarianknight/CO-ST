@@ -10,6 +10,8 @@ import javax.swing.JMenu;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.NumberFormat;
+import java.util.regex.Pattern;
 
 import javax.swing.JPanel;
 import com.jgoodies.forms.layout.FormLayout;
@@ -46,8 +48,17 @@ public class mainWindow implements ActionListener {
 	JLabel balTextValue;
 	JLabel incomeTextValue;
 	JLabel incomingIncomeTextValue;
+	JLabel savingsValueText;
 	private JFrame frmCostFinanceProgram;
-
+	private static final Pattern DOUBLE_PATTERN = Pattern.compile(
+		    "[\\x00-\\x20]*[+-]?(NaN|Infinity|((((\\p{Digit}+)(\\.)?((\\p{Digit}+)?)" +
+		    "([eE][+-]?(\\p{Digit}+))?)|(\\.((\\p{Digit}+))([eE][+-]?(\\p{Digit}+))?)|" +
+		    "(((0[xX](\\p{XDigit}+)(\\.)?)|(0[xX](\\p{XDigit}+)?(\\.)(\\p{XDigit}+)))" +
+		    "[pP][+-]?(\\p{Digit}+)))[fFdD]?))[\\x00-\\x20]*");
+	
+	NumberFormat format = NumberFormat.getInstance();
+  
+	
 	/**
 	 * Launch the application.
 	 */
@@ -103,6 +114,7 @@ public class mainWindow implements ActionListener {
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		Income.add(scrollPane, BorderLayout.EAST);
+		displayedList.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		
 		
 		displayedList.setLayoutOrientation(JList.VERTICAL_WRAP);
@@ -117,16 +129,19 @@ public class mainWindow implements ActionListener {
 		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
 		JButton backButton = new JButton("New Income");
+		backButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		backButton.addActionListener(this);
 		backButton.setPreferredSize(new Dimension(120, 40));
 		panel.add(backButton);
 		
 		JButton delButton = new JButton("Delete Income");
+		delButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		delButton.setPreferredSize(new Dimension(120, 40));
 		panel.add(delButton);
 		delButton.addActionListener(this);
 		
 		JButton refreshButton = new JButton("Refresh Income");
+		refreshButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		refreshButton.setPreferredSize(new Dimension(120, 40));
 		refreshButton.addActionListener(this);
 		panel.add(refreshButton);
@@ -162,6 +177,64 @@ public class mainWindow implements ActionListener {
 		incomingIncomeTextValue.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		Summary.add(incomingIncomeTextValue);
 		
+		JPanel OverviewPanel = new JPanel();
+		OverviewPanel.setBackground(SystemColor.control);
+		Income.add(OverviewPanel, BorderLayout.CENTER);
+		SpringLayout sl_OverviewPanel = new SpringLayout();
+		OverviewPanel.setLayout(sl_OverviewPanel);
+		
+		JPanel panel_1 = new JPanel();
+		panel_1.setBackground(SystemColor.inactiveCaptionBorder);
+		sl_OverviewPanel.putConstraint(SpringLayout.NORTH, panel_1, 10, SpringLayout.NORTH, OverviewPanel);
+		sl_OverviewPanel.putConstraint(SpringLayout.WEST, panel_1, 10, SpringLayout.WEST, OverviewPanel);
+		sl_OverviewPanel.putConstraint(SpringLayout.SOUTH, panel_1, 250, SpringLayout.NORTH, OverviewPanel);
+		sl_OverviewPanel.putConstraint(SpringLayout.EAST, panel_1, 311, SpringLayout.WEST, OverviewPanel);
+		OverviewPanel.add(panel_1);
+		SpringLayout sl_panel_1 = new SpringLayout();
+		panel_1.setLayout(sl_panel_1);
+		
+		JLabel SavingTitle = new JLabel("Savings");
+		sl_panel_1.putConstraint(SpringLayout.NORTH, SavingTitle, 10, SpringLayout.NORTH, panel_1);
+		sl_panel_1.putConstraint(SpringLayout.WEST, SavingTitle, 61, SpringLayout.WEST, panel_1);
+		sl_panel_1.putConstraint(SpringLayout.SOUTH, SavingTitle, 40, SpringLayout.NORTH, panel_1);
+		sl_panel_1.putConstraint(SpringLayout.EAST, SavingTitle, 214, SpringLayout.WEST, panel_1);
+		SavingTitle.setHorizontalAlignment(SwingConstants.CENTER);
+		SavingTitle.setFont(new Font("Tahoma", Font.BOLD, 18));
+		panel_1.add(SavingTitle);
+		
+		JPanel panel_2 = new JPanel();
+		panel_2.setBackground(SystemColor.inactiveCaptionBorder);
+		sl_panel_1.putConstraint(SpringLayout.NORTH, panel_2, 3, SpringLayout.SOUTH, SavingTitle);
+		sl_panel_1.putConstraint(SpringLayout.WEST, panel_2, 10, SpringLayout.WEST, panel_1);
+		sl_panel_1.putConstraint(SpringLayout.SOUTH, panel_2, 33, SpringLayout.SOUTH, SavingTitle);
+		sl_panel_1.putConstraint(SpringLayout.EAST, panel_2, 264, SpringLayout.WEST, panel_1);
+		panel_1.add(panel_2);
+		
+		JPanel panel_2_1 = new JPanel();
+		panel_2_1.setBackground(SystemColor.inactiveCaptionBorder);
+		sl_panel_1.putConstraint(SpringLayout.NORTH, panel_2_1, 6, SpringLayout.SOUTH, panel_2);
+		sl_panel_1.putConstraint(SpringLayout.WEST, panel_2_1, 10, SpringLayout.WEST, panel_1);
+		sl_panel_1.putConstraint(SpringLayout.SOUTH, panel_2_1, 36, SpringLayout.SOUTH, panel_2);
+		sl_panel_1.putConstraint(SpringLayout.EAST, panel_2_1, 0, SpringLayout.EAST, panel_2);
+		
+		JLabel savingsText = new JLabel("Savings:");
+		savingsText.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		savingsText.setHorizontalAlignment(SwingConstants.CENTER);
+		panel_2.add(savingsText);
+		
+		savingsValueText = new JLabel("$0.00");
+		savingsValueText.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		panel_2.add(savingsValueText);
+		panel_1.add(panel_2_1);
+		
+		JButton newSavingsButton = new JButton("Set Savings Goal");
+		sl_panel_1.putConstraint(SpringLayout.WEST, newSavingsButton, 10, SpringLayout.WEST, panel_1);
+		sl_panel_1.putConstraint(SpringLayout.SOUTH, newSavingsButton, -10, SpringLayout.SOUTH, panel_1);
+		newSavingsButton.setPreferredSize(new Dimension(120, 40));
+		newSavingsButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		panel_1.add(newSavingsButton);
+		newSavingsButton.addActionListener(this);
+		
 		JPanel Expenses = new JPanel();
 		tabbedPane.addTab("Expenses", null, Expenses, null);
 	}
@@ -179,6 +252,8 @@ public class mainWindow implements ActionListener {
 		case "Delete Income":
 			deleteIncome();
 			break;
+		case "Set Savings Goal":
+			setSavings();
 		}
 		
 	}
@@ -190,10 +265,42 @@ public class mainWindow implements ActionListener {
 		refreshBalance();
 	}
 	
-	public void addIncome() {
+	public String addIncomeName() {
 		String newName = (String)JOptionPane.showInputDialog("Please enter the name of the income.");
-		Double newValue = Double.parseDouble(JOptionPane.showInputDialog("What's the value of the income?"));
-		Double newLap = Double.parseDouble(JOptionPane.showInputDialog("How many days are between your pay periods?"));
+		return newName;
+	}
+	
+	public Double addIncomeValue() {
+		String newValue = JOptionPane.showInputDialog("What's the value of the income?");
+		if (newValue == null) return (double) 0;
+		if (isDouble(newValue)) {
+			return Double.parseDouble(newValue);
+		} else {
+			return addIncomeValue();
+		}
+	}
+	
+	public Double addIncomeLap() {
+		String newLap = JOptionPane.showInputDialog("How many days are between your pay periods?");
+		if (newLap == null) return (double) 0;
+		if (isDouble(newLap)) {
+			return Double.parseDouble(newLap);
+		} else {
+			return addIncomeLap();
+		}
+	}
+	
+
+	public static boolean isDouble(String s)
+	{
+	    return DOUBLE_PATTERN.matcher(s).matches();
+	}
+	
+	public void addIncome() {
+		String newName = addIncomeName();
+		if (newName.length() == 0) return;
+		Double newValue = addIncomeValue();
+		Double newLap = addIncomeLap();
 		newYear.makeIncome(newName, newValue, newLap);
 		refreshIncome();
 		
@@ -212,5 +319,20 @@ public class mainWindow implements ActionListener {
 		balTextValue.setText(newYear.getBalance());
 		incomingIncomeTextValue.setText(newYear.calcIncomingIncome());
 		
+	}
+	
+	public void refreshSavings() {
+		savingsValueText.setText("$" + newYear.getSavings());
+	}
+	
+	public void setSavings() {
+		String newSavings = JOptionPane.showInputDialog("What's your current goal?");
+		if( newSavings.length() == 0 ) return;
+		if (isDouble(newSavings)) {
+			newYear.setSavings(Double.parseDouble(newSavings));
+			refreshSavings();
+		} else {
+			setSavings();
+	}
 	}
 }
