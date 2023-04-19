@@ -57,6 +57,7 @@ public class mainWindow implements ActionListener {
 		    "[pP][+-]?(\\p{Digit}+)))[fFdD]?))[\\x00-\\x20]*");
 	
 	NumberFormat format = NumberFormat.getInstance();
+	private JLabel currentSavingsValue;
   
 	
 	/**
@@ -151,7 +152,7 @@ public class mainWindow implements ActionListener {
 		
 		JPanel Summary = new JPanel();
 		Income.add(Summary, BorderLayout.SOUTH);
-		Summary.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		Summary.setLayout(new FlowLayout(FlowLayout.CENTER, 8, 5));
 		
 		JLabel balText = new JLabel("Balance:");
 		balText.setFont(new Font("Tahoma", Font.BOLD, 16));
@@ -161,6 +162,9 @@ public class mainWindow implements ActionListener {
 		balTextValue.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		Summary.add(balTextValue);
 		
+		JLabel lblNewLabel = new JLabel("  ");
+		Summary.add(lblNewLabel);
+		
 		JLabel incomeText = new JLabel("Monthly Income:");
 		incomeText.setFont(new Font("Tahoma", Font.BOLD, 16));
 		Summary.add(incomeText);
@@ -168,6 +172,9 @@ public class mainWindow implements ActionListener {
 		incomeTextValue = new JLabel("$0.00");
 		incomeTextValue.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		Summary.add(incomeTextValue);
+		
+		JLabel lblNewLabel_1 = new JLabel("  ");
+		Summary.add(lblNewLabel_1);
 		
 		JLabel incomingIncomeText = new JLabel("Income to Arrive:");
 		incomingIncomeText.setFont(new Font("Tahoma", Font.BOLD, 16));
@@ -217,7 +224,7 @@ public class mainWindow implements ActionListener {
 		sl_panel_1.putConstraint(SpringLayout.SOUTH, panel_2_1, 36, SpringLayout.SOUTH, panel_2);
 		sl_panel_1.putConstraint(SpringLayout.EAST, panel_2_1, 0, SpringLayout.EAST, panel_2);
 		
-		JLabel savingsText = new JLabel("Savings:");
+		JLabel savingsText = new JLabel("Savings Goal:");
 		savingsText.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		savingsText.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_2.add(savingsText);
@@ -227,12 +234,28 @@ public class mainWindow implements ActionListener {
 		panel_2.add(savingsValueText);
 		panel_1.add(panel_2_1);
 		
+		JLabel currentSavingsText = new JLabel("Current Savings:");
+		currentSavingsText.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		panel_2_1.add(currentSavingsText);
+		
+		currentSavingsValue = new JLabel("$0.00");
+		currentSavingsValue.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		panel_2_1.add(currentSavingsValue);
+		
 		JButton newSavingsButton = new JButton("Set Savings Goal");
 		sl_panel_1.putConstraint(SpringLayout.WEST, newSavingsButton, 10, SpringLayout.WEST, panel_1);
 		sl_panel_1.putConstraint(SpringLayout.SOUTH, newSavingsButton, -10, SpringLayout.SOUTH, panel_1);
 		newSavingsButton.setPreferredSize(new Dimension(120, 40));
 		newSavingsButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		panel_1.add(newSavingsButton);
+		
+		JButton refreshSavings = new JButton("Refresh");
+		refreshSavings.addActionListener(this);
+		sl_panel_1.putConstraint(SpringLayout.NORTH, refreshSavings, 0, SpringLayout.NORTH, newSavingsButton);
+		sl_panel_1.putConstraint(SpringLayout.EAST, refreshSavings, -10, SpringLayout.EAST, panel_1);
+		refreshSavings.setPreferredSize(new Dimension(120, 40));
+		refreshSavings.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		panel_1.add(refreshSavings);
 		newSavingsButton.addActionListener(this);
 		
 		JPanel Expenses = new JPanel();
@@ -254,7 +277,12 @@ public class mainWindow implements ActionListener {
 			break;
 		case "Set Savings Goal":
 			setSavings();
+			break;
+		case "Refresh":
+			refreshSavings();
+			break;
 		}
+		
 		
 	}
 	
@@ -316,13 +344,14 @@ public class mainWindow implements ActionListener {
 	}
 	
 	public void refreshBalance() {
-		balTextValue.setText(newYear.getBalance());
+		balTextValue.setText(newYear.getSetBalance());
 		incomingIncomeTextValue.setText(newYear.calcIncomingIncome());
 		
 	}
 	
 	public void refreshSavings() {
-		savingsValueText.setText("$" + newYear.getSavings());
+		savingsValueText.setText("$" + newYear.getSetSavings());
+		currentSavingsValue.setText("$" + newYear.savingSetter());
 	}
 	
 	public void setSavings() {

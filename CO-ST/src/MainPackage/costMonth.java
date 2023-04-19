@@ -119,11 +119,11 @@ public class costMonth {
 		System.out.println(setDate);
 	}
 	
-	public void setSavings(double newSavings) {
+	public void setSetSavings(double newSavings) {
 		savings.setSavings(newSavings);
 	}
 	
-	public double getSavings() {
+	public double getSetSavings() {
 		return savings.getSavings();
 	}
 	

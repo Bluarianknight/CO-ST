@@ -25,8 +25,10 @@ public class costYear {
 	eleven,
 	twelve,
 	current = new costMonth();
+	int savings;
 	
 	public costYear() {
+		savings = 0;
 		one = new costMonth();
 		two = new costMonth();
 		three = new costMonth();
@@ -45,6 +47,7 @@ public class costYear {
 	
 	
 	public void ChangeMonth() {
+		
 		switch (checkDate.getMonthValue()) {
 		case 1:
 			twelve = current;
@@ -129,14 +132,14 @@ public class costYear {
 	public int returnIncomeLength() {
 		return current.findIncomeLength();
 	}
-	public double getSavings() {
-		return current.getSavings();
+	public double getSetSavings() {
+		return current.getSetSavings();
 	}
 	public void setSavings(double Savings) {
-		current.setSavings(Savings);
+		current.setSetSavings(Savings);
 	}
 	
-	public String getBalance() {
+	public String getSetBalance() {
 		if (current.getBalance() > -1) {
 		return "$" + current.getBalance();
 		} else {
@@ -162,5 +165,16 @@ public class costYear {
 	
 	public String calcIncomingIncome() {
 		return "$" + current.calcIncomingIncome();
+	}
+	
+	public double savingSetter() {
+		double bal = current.getBalance();
+		if (bal < savings && bal < current.getSetSavings() && bal > 0) {
+			return savings - (current.getSetSavings() - bal);
+		} else if (bal < savings && bal < current.getSetSavings() && bal < 0){
+			return savings - bal - current.getSetSavings();
+		} else {
+			return bal;
+		}
 	}
 }

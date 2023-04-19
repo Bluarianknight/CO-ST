@@ -338,8 +338,8 @@ public class MainScreen extends JFrame implements ActionListener {
 		}
 		
 		public void getSaving() {
-			System.out.println(newYear.getSavings());
-			savings.setText(String.valueOf(newYear.getSavings()));
+			System.out.println(newYear.getSetSavings());
+			savings.setText(String.valueOf(newYear.getSetSavings()));
 		}
 		
 	@Override
@@ -389,8 +389,8 @@ public class MainScreen extends JFrame implements ActionListener {
 			getSaving();
 			break;
 		case "Get Balance":
-			System.out.println(newYear.getBalance());
-			balance.setText(newYear.getBalance());
+			System.out.println(newYear.getSetBalance());
+			balance.setText(newYear.getSetBalance());
 			break;
 			}
 		
