@@ -21,14 +21,7 @@ public class costYear {
 	}
 			  
 	
-	public void loading(String fileLocation) {
-		current.loadAt(fileLocation);
-	}
-	
-	public void saving(String fileLocation) {
-		current.saveAt(fileLocation, savings);
-	}
-	
+		
 	public void makeExpense(String newName, double newValue, String newCat) {
 		current.newExpense(newName, newValue, newCat);
 	}
@@ -113,11 +106,11 @@ public class costYear {
 	}
 	
 	
-	public void Save() {
+	public void Save(String fileLocation) {
 		
 	}
 	
-	public void Load() {
+	public void Load(String fileLocation) {
 		
 	}
 }

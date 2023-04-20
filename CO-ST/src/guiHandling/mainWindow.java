@@ -113,6 +113,10 @@ public class mainWindow implements ActionListener {
 		newMenuItemFiles.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		fileMenu.add(newMenuItemFiles);
 		
+		JMenuItem saveMenu = new JMenuItem("Save");
+		saveMenu.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		fileMenu.add(saveMenu);
+		
 		JMenuItem loadMenu = new JMenuItem("Load");
 		loadMenu.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		fileMenu.add(loadMenu);
@@ -399,7 +403,7 @@ public class mainWindow implements ActionListener {
 		if (userSelection == JFileChooser.APPROVE_OPTION) {
 		    File fileToSave = fileChooser.getSelectedFile();
 		    String fileLocation = fileToSave.getAbsolutePath();
-		    newYear.loading(fileLocation);
+		    newYear.Load(fileLocation);
 	}
 	}
 	
@@ -414,7 +418,7 @@ public class mainWindow implements ActionListener {
 		if (userSelection == JFileChooser.APPROVE_OPTION) {
 		    File fileToSave = fileChooser.getSelectedFile();
 		    String fileLocation = fileToSave.getAbsolutePath();
-		    newYear.saving(fileLocation);
+		    newYear.Save(fileLocation);
 		}
 	}
 	
