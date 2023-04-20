@@ -44,11 +44,15 @@ public class mainWindow implements ActionListener {
 
 
 	DefaultListModel<Object> listed = new DefaultListModel<Object>();
+	DefaultListModel<Object> listedE = new DefaultListModel<Object>();
 	JList<Object> displayedList = new JList<Object>(listed);
+	JList<Object> expenseDisplay = new JList<Object>((listedE));
 	JLabel balTextValue;
+	JLabel balTextValue_1;
 	JLabel incomeTextValue;
 	JLabel incomingIncomeTextValue;
 	JLabel savingsValueText;
+	JLabel ExpenseTextValue;
 	private JFrame frmCostFinanceProgram;
 	private static final Pattern DOUBLE_PATTERN = Pattern.compile(
 		    "[\\x00-\\x20]*[+-]?(NaN|Infinity|((((\\p{Digit}+)(\\.)?((\\p{Digit}+)?)" +
@@ -102,6 +106,15 @@ public class mainWindow implements ActionListener {
 		JMenu fileMenu = new JMenu("Files");
 		fileMenu.setBackground(SystemColor.control);
 		menuBar.add(fileMenu);
+		
+		JMenuItem newMenuItemFiles = new JMenuItem("New");
+		newMenuItemFiles.setHorizontalAlignment(SwingConstants.CENTER);
+		newMenuItemFiles.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		fileMenu.add(newMenuItemFiles);
+		
+		JMenuItem loadMenu = new JMenuItem("Load");
+		fileMenu.add(loadMenu);
+		newMenuItemFiles.addActionListener(this);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		frmCostFinanceProgram.getContentPane().add(tabbedPane, BorderLayout.CENTER);
@@ -260,6 +273,67 @@ public class mainWindow implements ActionListener {
 		
 		JPanel Expenses = new JPanel();
 		tabbedPane.addTab("Expenses", null, Expenses, null);
+		Expenses.setLayout(new BorderLayout(0, 0));
+		
+		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		scrollPane_1.setPreferredSize(new Dimension(400, 300));
+		scrollPane_1.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		Expenses.add(scrollPane_1, BorderLayout.EAST);
+		
+		
+		expenseDisplay.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		expenseDisplay.setLayoutOrientation(JList.VERTICAL_WRAP);
+		expenseDisplay.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		scrollPane_1.setViewportView(expenseDisplay);
+		
+		JPanel panel_3 = new JPanel();
+		panel_3.setPreferredSize(new Dimension(10, 50));
+		panel_3.setMinimumSize(new Dimension(100, 50));
+		panel_3.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+		scrollPane_1.setColumnHeaderView(panel_3);
+		panel_3.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		
+		JButton newExpenseButton = new JButton("New Expense");
+		newExpenseButton.setPreferredSize(new Dimension(120, 40));
+		newExpenseButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		panel_3.add(newExpenseButton);
+		newExpenseButton.addActionListener(this);
+		
+		JButton delExpenseButton = new JButton("Delete Expense");
+		delExpenseButton.setPreferredSize(new Dimension(120, 40));
+		delExpenseButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		panel_3.add(delExpenseButton);
+		delExpenseButton.addActionListener(this);
+		
+		JButton refreshExpenseButton = new JButton("Refresh Expense");
+		refreshExpenseButton.setPreferredSize(new Dimension(120, 40));
+		refreshExpenseButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		panel_3.add(refreshExpenseButton);
+		refreshExpenseButton.addActionListener(this);
+		
+		JPanel Summary_1 = new JPanel();
+		Expenses.add(Summary_1, BorderLayout.SOUTH);
+		Summary_1.setLayout(new FlowLayout(FlowLayout.CENTER, 8, 5));
+		
+		JLabel balText_1 = new JLabel("Balance:");
+		balText_1.setFont(new Font("Tahoma", Font.BOLD, 16));
+		Summary_1.add(balText_1);
+		
+		balTextValue_1 = new JLabel("$0.00");
+		balTextValue_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		Summary_1.add(balTextValue_1);
+		
+		JLabel spacer3 = new JLabel("  ");
+		Summary_1.add(spacer3);
+		
+		JLabel expenseText = new JLabel("Monthly Expenses:");
+		expenseText.setFont(new Font("Tahoma", Font.BOLD, 16));
+		Summary_1.add(expenseText);
+		
+		ExpenseTextValue = new JLabel("$0.00");
+		ExpenseTextValue.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		Summary_1.add(ExpenseTextValue);
 	}
 
 	@Override
@@ -275,21 +349,48 @@ public class mainWindow implements ActionListener {
 		case "Delete Income":
 			deleteIncome();
 			break;
+		case "New Expense":
+			addExpense();
+			break;
+		case "Refresh Expense":
+			refreshExpense();
+			break;
+		case "Delete Expense":
+			deleteExpense();
+			break;
 		case "Set Savings Goal":
 			setSavings();
 			break;
 		case "Refresh":
 			refreshSavings();
 			break;
+		case "New":
+			newYear();
+			break;
 		}
 		
 		
+	}
+	
+	public void newYear() {
+		newYear = new costYear();
+		refreshIncome();
+		refreshBalance();
+		refreshExpense();
+		refreshSavings();
 	}
 	
 	public void refreshIncome() {
 		listed.removeAllElements();
 		listed.ensureCapacity(newYear.returnIncomeLength());
 		listed.addAll(newYear.returnIncomeDisplayed());
+		refreshBalance();
+	}
+	
+	public void refreshExpense() {
+		listedE.removeAllElements();
+		listedE.ensureCapacity(newYear.returnExpenseLength());
+		listedE.addAll(newYear.returnExpenseDisplayed());
 		refreshBalance();
 	}
 	
@@ -318,6 +419,30 @@ public class mainWindow implements ActionListener {
 		}
 	}
 	
+	public String addExpenseName() {
+		String newName = (String)JOptionPane.showInputDialog("Please enter the name of the expense.");
+		return newName;
+	}
+	
+	public Double addExpenseValue() {
+		String newValue = JOptionPane.showInputDialog("What's the cost value of the expense?");
+		if (newValue == null) return (double) 0;
+		if (isDouble(newValue)) {
+			return Double.parseDouble(newValue);
+		} else {
+			return addIncomeValue();
+		}
+	}
+	
+	public String addExpenseCategory() {
+		String[] options = {"housing", "utilities", "groceries", "personal", "entertainment", "other"};
+		int newCategory = JOptionPane.showOptionDialog(null, "What category is the expense?", "Expense", 0, 3, null, options, options[0]);
+		
+		
+			return options[newCategory];
+		
+	}
+	
 
 	public static boolean isDouble(String s)
 	{
@@ -335,6 +460,17 @@ public class mainWindow implements ActionListener {
 				
 	}
 	
+	public void addExpense() {
+		String newName = addExpenseName();
+		if (newName.length() == 0) return;
+		Double newValue = addExpenseValue();
+		String newCategory = addExpenseCategory();
+		newYear.makeExpense(newName, newValue, newCategory);
+		refreshExpense();
+	}
+	
+	
+	
 	public void deleteIncome() {
 		if (listed.size() != 0) {
 			System.out.println("Delete");
@@ -343,9 +479,19 @@ public class mainWindow implements ActionListener {
 		}
 	}
 	
+	public void deleteExpense() {
+		if (listedE.size() != 0) {
+			System.out.println("Delete");
+			newYear.removeExpense(expenseDisplay.getSelectedIndex());
+			refreshExpense();
+		}
+	}
+	
 	public void refreshBalance() {
 		balTextValue.setText(newYear.getSetBalance());
 		incomingIncomeTextValue.setText(newYear.calcIncomingIncome());
+		balTextValue_1.setText(newYear.getSetBalance());
+		ExpenseTextValue.setText("$" + newYear.returnExpenseTotal());
 		
 	}
 	

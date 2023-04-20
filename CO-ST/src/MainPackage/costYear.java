@@ -163,6 +163,10 @@ public class costYear {
 		current.removeIncome(x);
 	}
 	
+	public double returnExpenseTotal() {
+		return current.returnExpenseTotal();
+	}
+	
 	public String calcIncomingIncome() {
 		return "$" + current.calcIncomingIncome();
 	}

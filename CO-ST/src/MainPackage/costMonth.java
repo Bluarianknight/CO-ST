@@ -110,6 +110,14 @@ public class costMonth {
 		return balance;
 	}
 	
+	public double returnIncomeTotal() {
+		return monthIncome.returnTotalCost();
+	}
+	
+	public double returnExpenseTotal() {
+		return monthExpenses.returnTotalCost();
+	}
+	
 	// Prints out the balance. 
 	public void showBalance() {
 		System.out.println("The balance is currently: $" + getBalance());
