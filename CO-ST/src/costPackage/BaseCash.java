@@ -42,6 +42,10 @@ public class BaseCash {
 		return totalCostNames.get(Where);
 	}
 	
+	public String returnDisplayed(int Where) {
+		return displayedCost.get(Where);
+	}
+	
 	
 	public void setDisplayed(String one) {
 		displayedCost.add(one);

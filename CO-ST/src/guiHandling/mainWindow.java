@@ -12,6 +12,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.regex.Pattern;
 
 import javax.swing.JPanel;
@@ -39,15 +41,18 @@ import javax.swing.ListSelectionModel;
 import java.awt.FlowLayout;
 import javax.swing.JButton;
 import java.awt.ComponentOrientation;
-
+import costPackage.sortedExpense;
 public class mainWindow implements ActionListener {
 	costYear newYear = new costYear();
 
 
 	DefaultListModel<Object> listed = new DefaultListModel<Object>();
 	DefaultListModel<Object> listedE = new DefaultListModel<Object>();
+	DefaultListModel<Object> sortedList = new DefaultListModel<Object>();
 	JList<Object> displayedList = new JList<Object>(listed);
 	JList<Object> expenseDisplay = new JList<Object>((listedE));
+	JList<Object> sortedDisplay = new JList<Object>(sortedList);
+	JComboBox comboBox = new JComboBox();
 	JLabel balTextValue;
 	JLabel balTextValue_1;
 	JLabel incomeTextValue;
@@ -112,15 +117,17 @@ public class mainWindow implements ActionListener {
 		newMenuItemFiles.setHorizontalAlignment(SwingConstants.CENTER);
 		newMenuItemFiles.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		fileMenu.add(newMenuItemFiles);
+		newMenuItemFiles.addActionListener(this);
 		
 		JMenuItem saveMenu = new JMenuItem("Save");
 		saveMenu.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		fileMenu.add(saveMenu);
+		saveMenu.addActionListener(this);
 		
 		JMenuItem loadMenu = new JMenuItem("Load");
 		loadMenu.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		fileMenu.add(loadMenu);
-		newMenuItemFiles.addActionListener(this);
+		loadMenu.addActionListener(this);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		frmCostFinanceProgram.getContentPane().add(tabbedPane, BorderLayout.CENTER);
@@ -134,7 +141,7 @@ public class mainWindow implements ActionListener {
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		Income.add(scrollPane, BorderLayout.EAST);
-		displayedList.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		displayedList.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		
 		
 		displayedList.setLayoutOrientation(JList.VERTICAL_WRAP);
@@ -290,7 +297,7 @@ public class mainWindow implements ActionListener {
 		
 		expenseDisplay.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		expenseDisplay.setLayoutOrientation(JList.VERTICAL_WRAP);
-		expenseDisplay.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		expenseDisplay.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		scrollPane_1.setViewportView(expenseDisplay);
 		
 		JPanel panel_3 = new JPanel();
@@ -340,6 +347,36 @@ public class mainWindow implements ActionListener {
 		ExpenseTextValue = new JLabel("$0.00");
 		ExpenseTextValue.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		Summary_1.add(ExpenseTextValue);
+		
+		JScrollPane scrollPane_1_1 = new JScrollPane();
+		scrollPane_1_1.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		scrollPane_1_1.setPreferredSize(new Dimension(400, 300));
+		scrollPane_1_1.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		Expenses.add(scrollPane_1_1, BorderLayout.WEST);
+		
+		
+		sortedDisplay.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		sortedDisplay.setLayoutOrientation(JList.VERTICAL_WRAP);
+		sortedDisplay.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		scrollPane_1_1.setViewportView(sortedDisplay);
+		
+		JPanel panel_3_1 = new JPanel();
+		panel_3_1.setPreferredSize(new Dimension(10, 50));
+		panel_3_1.setMinimumSize(new Dimension(100, 50));
+		panel_3_1.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+		scrollPane_1_1.setColumnHeaderView(panel_3_1);
+		panel_3_1.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		
+		JButton sortExpensesButton = new JButton("Sort");
+		sortExpensesButton.setPreferredSize(new Dimension(120, 40));
+		sortExpensesButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		panel_3_1.add(sortExpensesButton);
+		sortExpensesButton.addActionListener(this);
+		
+		
+		comboBox.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"housing", "utilities", "groceries", "personal", "entertainment", "other"}));
+		panel_3_1.add(comboBox);
 	}
 
 	@Override
@@ -379,6 +416,9 @@ public class mainWindow implements ActionListener {
 		case "Load":
 			load();
 			break;
+		case "Sort":
+			sortExpense();
+			break;
 		}
 		
 		
@@ -392,13 +432,23 @@ public class mainWindow implements ActionListener {
 		refreshSavings();
 	}
 	
+	
+	public void sortExpense() {
+		String category = (String) comboBox.getSelectedItem();
+		sortedList.clear();
+		ArrayList<String> sorted = newYear.sortExpense(category);
+		sortedList.ensureCapacity(sorted.size());
+		sortedList.addAll(sorted);
+		
+	}
+	
 	public void load() {
 		JFrame parentFrame = new JFrame();
 		 
 		JFileChooser fileChooser = new JFileChooser();
 		fileChooser.setDialogTitle("Load File");   
 		 
-		int userSelection = fileChooser.showSaveDialog(parentFrame);
+		int userSelection = fileChooser.showOpenDialog(parentFrame);
 		 
 		if (userSelection == JFileChooser.APPROVE_OPTION) {
 		    File fileToSave = fileChooser.getSelectedFile();
@@ -534,6 +584,7 @@ public class mainWindow implements ActionListener {
 		incomingIncomeTextValue.setText(newYear.calcIncomingIncome());
 		balTextValue_1.setText(newYear.getSetBalance());
 		ExpenseTextValue.setText("$" + newYear.returnExpenseTotal());
+		refreshSavings();
 		
 	}
 	

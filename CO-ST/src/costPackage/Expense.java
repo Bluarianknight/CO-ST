@@ -13,7 +13,7 @@ public class Expense extends BaseCash {
 	public void newExpense(String newName, double newCost, String newCategory) {
 		this.setBase(newCost, newName);
 		setCategory(newCategory);
-		this.setDisplayed(" " + expenseCategory.size() + ": " + ": $" + newCost + " category: " + newCategory);
+		this.setDisplayed(expenseCategory.size() + ": " + newName +  " - $" + newCost + " - category: " + newCategory);
 	}
 	
 	// Returns the variable of CostValue at Where.
@@ -29,6 +29,10 @@ public class Expense extends BaseCash {
 	// Returns the variable of CostName at Where. 
 	public String returnExpenseName(int Where) {
 		return super.returnCostName(Where);
+	}
+	
+	public String returnDisplayed(int Where) {
+		return super.returnDisplayed(Where);
 	}
 	
 	public String returnExpenseCategory(int Where) {

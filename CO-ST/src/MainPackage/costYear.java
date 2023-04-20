@@ -7,6 +7,9 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.Month;
 import java.util.ArrayList;
+import java.util.Collections;
+
+import costPackage.sortedExpense;
 
 public class costYear {
 
@@ -103,6 +106,18 @@ public class costYear {
 		} else {
 			return bal;
 		}
+	}
+	
+	public ArrayList<String> sortExpense(String category) {
+		ArrayList <sortedExpense> sorted = current.categorizedExpense(category);
+		ArrayList <String> newSorted = new ArrayList<String>();
+		Collections.sort(sorted, Collections.reverseOrder());
+		for (int i = 0;  i < sorted.size(); i++) {
+			sortedExpense counted = sorted.get(i);
+			counted.sortDisplay(i + 1);
+			newSorted.add(counted.returnDisplay());
+		}
+		return newSorted;
 	}
 	
 	

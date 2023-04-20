@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import costPackage.Expense;
 import costPackage.Income;
 import costPackage.Savings;
+import costPackage.sortedExpense;
 import timePackage.costDate;
 
 
@@ -203,6 +204,21 @@ public class costMonth {
 		}
 		
 		return x;
+	}
+	
+	
+	public ArrayList<sortedExpense> categorizedExpense(String category) {
+		Expense newExpense = new Expense();
+		ArrayList<sortedExpense> sortedList = new ArrayList<sortedExpense>();
+		for (int x = 0; x < monthExpenses.returnExpenseLength(); x++) {
+			if (monthExpenses.returnExpenseCategory(x) == category) {
+				sortedExpense sortedE = new sortedExpense(monthExpenses.returnExpenseName(x), monthExpenses.returnExpenseValue(x), monthExpenses.returnDisplayed(x), category);
+				sortedList.add(sortedE);
+				
+			}
+			
+		}
+		return sortedList;
 	}
 	
 	public Expense getExpense() {
