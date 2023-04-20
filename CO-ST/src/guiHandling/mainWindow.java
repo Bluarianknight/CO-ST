@@ -10,6 +10,7 @@ import javax.swing.JMenu;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.text.NumberFormat;
 import java.util.regex.Pattern;
 
@@ -113,6 +114,7 @@ public class mainWindow implements ActionListener {
 		fileMenu.add(newMenuItemFiles);
 		
 		JMenuItem loadMenu = new JMenuItem("Load");
+		loadMenu.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		fileMenu.add(loadMenu);
 		newMenuItemFiles.addActionListener(this);
 		
@@ -367,6 +369,12 @@ public class mainWindow implements ActionListener {
 		case "New":
 			newYear();
 			break;
+		case "Save":
+			save();
+			break;
+		case "Load":
+			load();
+			break;
 		}
 		
 		
@@ -378,6 +386,36 @@ public class mainWindow implements ActionListener {
 		refreshBalance();
 		refreshExpense();
 		refreshSavings();
+	}
+	
+	public void load() {
+		JFrame parentFrame = new JFrame();
+		 
+		JFileChooser fileChooser = new JFileChooser();
+		fileChooser.setDialogTitle("Load File");   
+		 
+		int userSelection = fileChooser.showSaveDialog(parentFrame);
+		 
+		if (userSelection == JFileChooser.APPROVE_OPTION) {
+		    File fileToSave = fileChooser.getSelectedFile();
+		    String fileLocation = fileToSave.getAbsolutePath();
+		    newYear.loading(fileLocation);
+	}
+	}
+	
+	public void save() {
+		JFrame parentFrame = new JFrame();
+		 
+		JFileChooser fileChooser = new JFileChooser();
+		fileChooser.setDialogTitle("Save File");   
+		 
+		int userSelection = fileChooser.showSaveDialog(parentFrame);
+		 
+		if (userSelection == JFileChooser.APPROVE_OPTION) {
+		    File fileToSave = fileChooser.getSelectedFile();
+		    String fileLocation = fileToSave.getAbsolutePath();
+		    newYear.saving(fileLocation);
+		}
 	}
 	
 	public void refreshIncome() {

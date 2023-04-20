@@ -1,6 +1,11 @@
 package MainPackage;
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import costPackage.Expense;
+import costPackage.Income;
+import costPackage.Savings;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
@@ -24,6 +29,10 @@ public class category {
     double sumEntertainment = 0;
     double totalexpense = 0;
 
+    
+    public void saving(Expense newExpense, Income newIncome, Savings newSaving, String fileLocation, int totalSavings) {
+    	
+    }
 
     // this method let user choose with category the expenses going to be saved in.
     // this method will write the expenses and save it into the file in choosen category.

@@ -43,6 +43,16 @@ public class costMonth {
 		
 	}
 	
+	
+	public void saveAt(String fileLocation, int savings) {
+		// Add category save load here.
+		
+	}
+	
+	public void loadAt(String fileLocation) {
+		// add loading in category here.
+	}
+	
 	// Used for automated checking if this date has already been used. Will be used in costYear.
 	public void setCheck() {
 		dateCheck++;
@@ -99,7 +109,7 @@ public class costMonth {
 	public String findIncomeCount(int Num) {
 		String returnIncomeName = monthIncome.returnIncomeName(Num);
 		double returnIncomeValue = monthIncome.returnIncomeValue(Num);
-		double returnIncomeCycle = monthIncome.countIncomeLap(Num);
+		double returnIncomeCycle = monthIncome.returnIncomeLap(Num);
 		String newString = Num + 1 + ": " + returnIncomeName + " $" + returnIncomeValue + ", Cycle: " + returnIncomeCycle + " days.";
 		return newString;
 	}
@@ -179,7 +189,7 @@ public class costMonth {
 	
 	public double calcSingleIncomingIncome(int a) {
 		int x = 0;
-		for (double z = theDate.remainderDays(); z > monthIncome.countIncomeLap(a); z = z - monthIncome.countIncomeLap(a)) {
+		for (double z = theDate.remainderDays(); z > monthIncome.returnIncomeLap(a); z = z - monthIncome.returnIncomeLap(a)) {
 			x += monthIncome.returnCostValue(a);
 		}
 		return x;
@@ -195,7 +205,26 @@ public class costMonth {
 		return x;
 	}
 	
+	public Expense getExpense() {
+		return monthExpenses;
+	}
+	public Income getIncome() {
+		return monthIncome;
+	}
 	
+	public Savings getSaving() {
+		return savings;
+	}
+	
+	public void setExpense(Expense newExpense) {
+		monthExpenses = newExpense;
+	}
+	public void setIncome(Income newIncome) {
+		monthIncome = newIncome;
+	}
+	public void setSaving(Savings newSaving) {
+		savings = newSaving;
+	}
 	
 	}
 	/*
