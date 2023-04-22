@@ -42,6 +42,9 @@ import java.awt.FlowLayout;
 import javax.swing.JButton;
 import java.awt.ComponentOrientation;
 import costPackage.sortedExpense;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.LineBorder;
 public class mainWindow implements ActionListener {
 	costYear newYear = new costYear();
 
@@ -96,6 +99,7 @@ public class mainWindow implements ActionListener {
 	/**
 	 * Initialize the contents of the frame.
 	 */
+	@SuppressWarnings("rawtypes")
 	private void initialize() {
 		frmCostFinanceProgram = new JFrame();
 		frmCostFinanceProgram.setTitle("CO-ST Finance Program");
@@ -127,6 +131,9 @@ public class mainWindow implements ActionListener {
 		JMenuItem loadMenu = new JMenuItem("Load");
 		loadMenu.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		fileMenu.add(loadMenu);
+		
+		JMenu helpMenu = new JMenu("Help");
+		menuBar.add(helpMenu);
 		loadMenu.addActionListener(this);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
@@ -282,29 +289,64 @@ public class mainWindow implements ActionListener {
 		refreshSavings.setPreferredSize(new Dimension(120, 40));
 		refreshSavings.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		panel_1.add(refreshSavings);
+		
+		JPanel timePanel = new JPanel();
+		timePanel.setBorder(new LineBorder(new Color(0, 0, 0)));
+		sl_OverviewPanel.putConstraint(SpringLayout.NORTH, timePanel, 0, SpringLayout.NORTH, panel_1);
+		sl_OverviewPanel.putConstraint(SpringLayout.WEST, timePanel, 6, SpringLayout.EAST, panel_1);
+		sl_OverviewPanel.putConstraint(SpringLayout.SOUTH, timePanel, 0, SpringLayout.SOUTH, panel_1);
+		sl_OverviewPanel.putConstraint(SpringLayout.EAST, timePanel, 350, SpringLayout.EAST, panel_1);
+		timePanel.setBackground(SystemColor.menu);
+		OverviewPanel.add(timePanel);
+		SpringLayout sl_timePanel = new SpringLayout();
+		timePanel.setLayout(sl_timePanel);
+		
+		JLabel timeLabel = new JLabel("Clock");
+		sl_timePanel.putConstraint(SpringLayout.NORTH, timeLabel, 10, SpringLayout.NORTH, timePanel);
+		sl_timePanel.putConstraint(SpringLayout.WEST, timeLabel, 144, SpringLayout.WEST, timePanel);
+		sl_timePanel.putConstraint(SpringLayout.SOUTH, timeLabel, -178, SpringLayout.SOUTH, timePanel);
+		sl_timePanel.putConstraint(SpringLayout.EAST, timeLabel, -150, SpringLayout.EAST, timePanel);
+		timeLabel.setFont(new Font("Tahoma", Font.BOLD, 16));
+		timePanel.add(timeLabel);
+		
+		JLabel timeDisplay = new JLabel("14:24");
+		sl_timePanel.putConstraint(SpringLayout.NORTH, timeDisplay, 67, SpringLayout.NORTH, timePanel);
+		sl_timePanel.putConstraint(SpringLayout.WEST, timeDisplay, 144, SpringLayout.WEST, timePanel);
+		sl_timePanel.putConstraint(SpringLayout.EAST, timeDisplay, -150, SpringLayout.EAST, timePanel);
+		timeDisplay.setFont(new Font("Tahoma", Font.BOLD, 16));
+		timePanel.add(timeDisplay);
+		
+		JPanel suggestionsPanelIncome = new JPanel();
+		sl_OverviewPanel.putConstraint(SpringLayout.NORTH, suggestionsPanelIncome, 6, SpringLayout.SOUTH, panel_1);
+		sl_OverviewPanel.putConstraint(SpringLayout.WEST, suggestionsPanelIncome, 0, SpringLayout.WEST, panel_1);
+		sl_OverviewPanel.putConstraint(SpringLayout.SOUTH, suggestionsPanelIncome, 257, SpringLayout.SOUTH, panel_1);
+		sl_OverviewPanel.putConstraint(SpringLayout.EAST, suggestionsPanelIncome, 0, SpringLayout.EAST, timePanel);
+		suggestionsPanelIncome.setBackground(Color.WHITE);
+		OverviewPanel.add(suggestionsPanelIncome);
+		suggestionsPanelIncome.setLayout(new SpringLayout());
 		newSavingsButton.addActionListener(this);
 		
 		JPanel Expenses = new JPanel();
 		tabbedPane.addTab("Expenses", null, Expenses, null);
 		Expenses.setLayout(new BorderLayout(0, 0));
 		
-		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		scrollPane_1.setPreferredSize(new Dimension(400, 300));
-		scrollPane_1.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		Expenses.add(scrollPane_1, BorderLayout.EAST);
+		JScrollPane expenseListPane = new JScrollPane();
+		expenseListPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		expenseListPane.setPreferredSize(new Dimension(400, 300));
+		expenseListPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		Expenses.add(expenseListPane, BorderLayout.EAST);
 		
 		
 		expenseDisplay.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		expenseDisplay.setLayoutOrientation(JList.VERTICAL_WRAP);
 		expenseDisplay.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		scrollPane_1.setViewportView(expenseDisplay);
+		expenseListPane.setViewportView(expenseDisplay);
 		
 		JPanel panel_3 = new JPanel();
 		panel_3.setPreferredSize(new Dimension(10, 50));
 		panel_3.setMinimumSize(new Dimension(100, 50));
 		panel_3.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
-		scrollPane_1.setColumnHeaderView(panel_3);
+		expenseListPane.setColumnHeaderView(panel_3);
 		panel_3.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
 		JButton newExpenseButton = new JButton("New Expense");
@@ -325,58 +367,62 @@ public class mainWindow implements ActionListener {
 		panel_3.add(refreshExpenseButton);
 		refreshExpenseButton.addActionListener(this);
 		
-		JPanel Summary_1 = new JPanel();
-		Expenses.add(Summary_1, BorderLayout.SOUTH);
-		Summary_1.setLayout(new FlowLayout(FlowLayout.CENTER, 8, 5));
+		JPanel summaryExpense = new JPanel();
+		Expenses.add(summaryExpense, BorderLayout.SOUTH);
+		summaryExpense.setLayout(new FlowLayout(FlowLayout.CENTER, 8, 5));
 		
 		JLabel balText_1 = new JLabel("Balance:");
 		balText_1.setFont(new Font("Tahoma", Font.BOLD, 16));
-		Summary_1.add(balText_1);
+		summaryExpense.add(balText_1);
 		
 		balTextValue_1 = new JLabel("$0.00");
 		balTextValue_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		Summary_1.add(balTextValue_1);
+		summaryExpense.add(balTextValue_1);
 		
 		JLabel spacer3 = new JLabel("  ");
-		Summary_1.add(spacer3);
+		summaryExpense.add(spacer3);
 		
 		JLabel expenseText = new JLabel("Monthly Expenses:");
 		expenseText.setFont(new Font("Tahoma", Font.BOLD, 16));
-		Summary_1.add(expenseText);
+		summaryExpense.add(expenseText);
 		
 		ExpenseTextValue = new JLabel("$0.00");
 		ExpenseTextValue.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		Summary_1.add(ExpenseTextValue);
+		summaryExpense.add(ExpenseTextValue);
 		
-		JScrollPane scrollPane_1_1 = new JScrollPane();
-		scrollPane_1_1.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		scrollPane_1_1.setPreferredSize(new Dimension(400, 300));
-		scrollPane_1_1.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		Expenses.add(scrollPane_1_1, BorderLayout.WEST);
+		JScrollPane sortPane = new JScrollPane();
+		sortPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		sortPane.setPreferredSize(new Dimension(400, 300));
+		sortPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		Expenses.add(sortPane, BorderLayout.WEST);
 		
 		
 		sortedDisplay.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		sortedDisplay.setLayoutOrientation(JList.VERTICAL_WRAP);
 		sortedDisplay.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		scrollPane_1_1.setViewportView(sortedDisplay);
+		sortPane.setViewportView(sortedDisplay);
 		
-		JPanel panel_3_1 = new JPanel();
-		panel_3_1.setPreferredSize(new Dimension(10, 50));
-		panel_3_1.setMinimumSize(new Dimension(100, 50));
-		panel_3_1.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
-		scrollPane_1_1.setColumnHeaderView(panel_3_1);
-		panel_3_1.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		JPanel sortPaneButtons = new JPanel();
+		sortPaneButtons.setPreferredSize(new Dimension(10, 50));
+		sortPaneButtons.setMinimumSize(new Dimension(100, 50));
+		sortPaneButtons.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+		sortPane.setColumnHeaderView(sortPaneButtons);
+		sortPaneButtons.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		
+		JLabel sortExpenses = new JLabel("Sort Expenses");
+		sortExpenses.setFont(new Font("Tahoma", Font.BOLD, 14));
+		sortPaneButtons.add(sortExpenses);
 		
 		JButton sortExpensesButton = new JButton("Sort");
 		sortExpensesButton.setPreferredSize(new Dimension(120, 40));
-		sortExpensesButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		panel_3_1.add(sortExpensesButton);
+		sortExpensesButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		sortPaneButtons.add(sortExpensesButton);
 		sortExpensesButton.addActionListener(this);
 		
 		
-		comboBox.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		comboBox.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		comboBox.setModel(new DefaultComboBoxModel(new String[] {"housing", "utilities", "groceries", "personal", "entertainment", "other"}));
-		panel_3_1.add(comboBox);
+		sortPaneButtons.add(comboBox);
 	}
 
 	@Override
@@ -495,6 +541,10 @@ public class mainWindow implements ActionListener {
 		String newValue = JOptionPane.showInputDialog("What's the value of the income?");
 		if (newValue == null) return (double) 0;
 		if (isDouble(newValue)) {
+			if (Double.valueOf(newValue) < 0) return addIncomeValue();
+			}
+		
+		if (isDouble(newValue)) {
 			return Double.parseDouble(newValue);
 		} else {
 			return addIncomeValue();
@@ -504,6 +554,9 @@ public class mainWindow implements ActionListener {
 	public Double addIncomeLap() {
 		String newLap = JOptionPane.showInputDialog("How many days are between your pay periods?");
 		if (newLap == null) return (double) 0;
+		if (isDouble(newLap)) {
+			if (Double.valueOf(newLap) < 0) return addIncomeLap();
+			}
 		if (isDouble(newLap)) {
 			return Double.parseDouble(newLap);
 		} else {
@@ -520,9 +573,12 @@ public class mainWindow implements ActionListener {
 		String newValue = JOptionPane.showInputDialog("What's the cost value of the expense?");
 		if (newValue == null) return (double) 0;
 		if (isDouble(newValue)) {
+		if (Double.valueOf(newValue) < 0) return addExpenseValue();
+		}
+		if (isDouble(newValue)) {
 			return Double.parseDouble(newValue);
 		} else {
-			return addIncomeValue();
+			return addExpenseValue();
 		}
 	}
 	
@@ -543,9 +599,11 @@ public class mainWindow implements ActionListener {
 	
 	public void addIncome() {
 		String newName = addIncomeName();
-		if (newName.length() == 0) return;
+		if (newName == null) return;
 		Double newValue = addIncomeValue();
+		if (newValue == 0) return;
 		Double newLap = addIncomeLap();
+		if (newLap == 0) return;
 		newYear.makeIncome(newName, newValue, newLap);
 		refreshIncome();
 		
@@ -554,7 +612,7 @@ public class mainWindow implements ActionListener {
 	
 	public void addExpense() {
 		String newName = addExpenseName();
-		if (newName.length() == 0) return;
+		if (newName == null) return;
 		Double newValue = addExpenseValue();
 		String newCategory = addExpenseCategory();
 		newYear.makeExpense(newName, newValue, newCategory);
