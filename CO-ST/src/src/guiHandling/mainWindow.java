@@ -1,4 +1,4 @@
-package guiHandling;
+package src.guiHandling;
 
 import java.awt.BorderLayout;
 
@@ -13,15 +13,10 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.regex.Pattern;
 
 import javax.swing.JPanel;
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.ColumnSpec;
-import com.jgoodies.forms.layout.RowSpec;
-
-import MainPackage.costYear;
+import MainPackage.mainClass;
 
 import com.jgoodies.forms.layout.FormSpecs;
 import javax.swing.*;
@@ -45,8 +40,9 @@ import costPackage.sortedExpense;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.LineBorder;
+@SuppressWarnings("unused")
 public class mainWindow implements ActionListener {
-	costYear newYear = new costYear();
+	mainClass newYear = new mainClass();
 
 
 	DefaultListModel<Object> listed = new DefaultListModel<Object>();
@@ -55,6 +51,7 @@ public class mainWindow implements ActionListener {
 	JList<Object> displayedList = new JList<Object>(listed);
 	JList<Object> expenseDisplay = new JList<Object>((listedE));
 	JList<Object> sortedDisplay = new JList<Object>(sortedList);
+	@SuppressWarnings("rawtypes")
 	JComboBox comboBox = new JComboBox();
 	JLabel balTextValue;
 	JLabel balTextValue_1;
@@ -99,7 +96,7 @@ public class mainWindow implements ActionListener {
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	@SuppressWarnings("rawtypes")
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private void initialize() {
 		frmCostFinanceProgram = new JFrame();
 		frmCostFinanceProgram.setTitle("CO-ST Finance Program");
@@ -471,7 +468,7 @@ public class mainWindow implements ActionListener {
 	}
 	
 	public void newYear() {
-		newYear = new costYear();
+		newYear = new mainClass();
 		refreshIncome();
 		refreshBalance();
 		refreshExpense();

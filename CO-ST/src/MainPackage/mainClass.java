@@ -11,14 +11,14 @@ import java.util.Collections;
 
 import costPackage.sortedExpense;
 
-public class costYear {
+public class mainClass {
 
 	LocalDate checkDate = LocalDate.now();
 	
 	costMonth current = new costMonth();
 	int savings;
 	
-	public costYear() {
+	public mainClass() {
 		savings = 0;
 		
 	}
