@@ -3,7 +3,7 @@ package src.guiHandling;
 import java.awt.BorderLayout;
 
 import java.awt.EventQueue;
-
+import javax.swing.JOptionPane;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
@@ -12,7 +12,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.text.NumberFormat;
+import java.time.Clock;
+import java.time.Year;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 
 import javax.swing.JPanel;
@@ -48,17 +54,27 @@ public class mainWindow implements ActionListener {
 	DefaultListModel<Object> listed = new DefaultListModel<Object>();
 	DefaultListModel<Object> listedE = new DefaultListModel<Object>();
 	DefaultListModel<Object> sortedList = new DefaultListModel<Object>();
+	
+	
 	JList<Object> displayedList = new JList<Object>(listed);
 	JList<Object> expenseDisplay = new JList<Object>((listedE));
 	JList<Object> sortedDisplay = new JList<Object>(sortedList);
+	
+	Calendar now = Calendar.getInstance();
+	
+	
 	@SuppressWarnings("rawtypes")
 	JComboBox comboBox = new JComboBox();
+	
+	
 	JLabel balTextValue;
 	JLabel balTextValue_1;
 	JLabel incomeTextValue;
 	JLabel incomingIncomeTextValue;
 	JLabel savingsValueText;
 	JLabel ExpenseTextValue;
+	
+	
 	private JFrame frmCostFinanceProgram;
 	private static final Pattern DOUBLE_PATTERN = Pattern.compile(
 		    "[\\x00-\\x20]*[+-]?(NaN|Infinity|((((\\p{Digit}+)(\\.)?((\\p{Digit}+)?)" +
@@ -105,6 +121,10 @@ public class mainWindow implements ActionListener {
 		frmCostFinanceProgram.setSize(1090, 638);
 		frmCostFinanceProgram.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
+		
+		
+		
+		
 		JMenuBar menuBar = new JMenuBar();
 		menuBar.setMargin(new Insets(1, 0, 0, 0));
 		menuBar.setBackground(SystemColor.menu);
@@ -131,7 +151,11 @@ public class mainWindow implements ActionListener {
 		
 		JMenu helpMenu = new JMenu("Help");
 		menuBar.add(helpMenu);
+		
+		JMenuItem helpMenuItem = new JMenuItem("Show Manual");
+		helpMenu.add(helpMenuItem);
 		loadMenu.addActionListener(this);
+		helpMenuItem.addActionListener(this);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		frmCostFinanceProgram.getContentPane().add(tabbedPane, BorderLayout.CENTER);
@@ -298,29 +322,46 @@ public class mainWindow implements ActionListener {
 		SpringLayout sl_timePanel = new SpringLayout();
 		timePanel.setLayout(sl_timePanel);
 		
-		JLabel timeLabel = new JLabel("Clock");
-		sl_timePanel.putConstraint(SpringLayout.NORTH, timeLabel, 10, SpringLayout.NORTH, timePanel);
-		sl_timePanel.putConstraint(SpringLayout.WEST, timeLabel, 144, SpringLayout.WEST, timePanel);
-		sl_timePanel.putConstraint(SpringLayout.SOUTH, timeLabel, -178, SpringLayout.SOUTH, timePanel);
-		sl_timePanel.putConstraint(SpringLayout.EAST, timeLabel, -150, SpringLayout.EAST, timePanel);
+		JLabel timeLabel = new JLabel("Date:");
+		sl_timePanel.putConstraint(SpringLayout.NORTH, timeLabel, 72, SpringLayout.NORTH, timePanel);
+		sl_timePanel.putConstraint(SpringLayout.WEST, timeLabel, 10, SpringLayout.WEST, timePanel);
+		sl_timePanel.putConstraint(SpringLayout.SOUTH, timeLabel, -116, SpringLayout.SOUTH, timePanel);
+		sl_timePanel.putConstraint(SpringLayout.EAST, timeLabel, -284, SpringLayout.EAST, timePanel);
 		timeLabel.setFont(new Font("Tahoma", Font.BOLD, 16));
 		timePanel.add(timeLabel);
-		
-		JLabel timeDisplay = new JLabel("14:24");
-		sl_timePanel.putConstraint(SpringLayout.NORTH, timeDisplay, 67, SpringLayout.NORTH, timePanel);
-		sl_timePanel.putConstraint(SpringLayout.WEST, timeDisplay, 144, SpringLayout.WEST, timePanel);
-		sl_timePanel.putConstraint(SpringLayout.EAST, timeDisplay, -150, SpringLayout.EAST, timePanel);
-		timeDisplay.setFont(new Font("Tahoma", Font.BOLD, 16));
-		timePanel.add(timeDisplay);
 		
 		JPanel suggestionsPanelIncome = new JPanel();
 		sl_OverviewPanel.putConstraint(SpringLayout.NORTH, suggestionsPanelIncome, 6, SpringLayout.SOUTH, panel_1);
 		sl_OverviewPanel.putConstraint(SpringLayout.WEST, suggestionsPanelIncome, 0, SpringLayout.WEST, panel_1);
 		sl_OverviewPanel.putConstraint(SpringLayout.SOUTH, suggestionsPanelIncome, 257, SpringLayout.SOUTH, panel_1);
 		sl_OverviewPanel.putConstraint(SpringLayout.EAST, suggestionsPanelIncome, 0, SpringLayout.EAST, timePanel);
+		
+		JLabel dateDisplay = new JLabel(Calendar.MONTH + "/" + Calendar.DATE + "/" + Year.now());
+		sl_timePanel.putConstraint(SpringLayout.NORTH, dateDisplay, 15, SpringLayout.NORTH, timeLabel);
+		sl_timePanel.putConstraint(SpringLayout.WEST, dateDisplay, 6, SpringLayout.EAST, timeLabel);
+		sl_timePanel.putConstraint(SpringLayout.EAST, dateDisplay, 86, SpringLayout.EAST, timeLabel);
+		dateDisplay.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		timePanel.add(dateDisplay);
+		
+		JButton newMonthBtn = new JButton("New Month");
+		sl_timePanel.putConstraint(SpringLayout.NORTH, newMonthBtn, 16, SpringLayout.NORTH, timePanel);
+		sl_timePanel.putConstraint(SpringLayout.EAST, newMonthBtn, -10, SpringLayout.EAST, timePanel);
+		newMonthBtn.setPreferredSize(new Dimension(120, 40));
+		newMonthBtn.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		timePanel.add(newMonthBtn);
+		
+		JLabel timeLabel_1 = new JLabel("Month Controls");
+		sl_timePanel.putConstraint(SpringLayout.NORTH, timeLabel_1, 0, SpringLayout.NORTH, newMonthBtn);
+		sl_timePanel.putConstraint(SpringLayout.WEST, timeLabel_1, 10, SpringLayout.WEST, timePanel);
+		sl_timePanel.putConstraint(SpringLayout.EAST, timeLabel_1, 160, SpringLayout.WEST, timePanel);
+		timeLabel_1.setFont(new Font("Tahoma", Font.BOLD, 18));
+		timePanel.add(timeLabel_1);
+		newMonthBtn.addActionListener(this);
+		
 		suggestionsPanelIncome.setBackground(Color.WHITE);
 		OverviewPanel.add(suggestionsPanelIncome);
-		suggestionsPanelIncome.setLayout(new SpringLayout());
+		SpringLayout sl_suggestionsPanelIncome = new SpringLayout();
+		suggestionsPanelIncome.setLayout(sl_suggestionsPanelIncome);
 		newSavingsButton.addActionListener(this);
 		
 		JPanel Expenses = new JPanel();
@@ -420,10 +461,42 @@ public class mainWindow implements ActionListener {
 		comboBox.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		comboBox.setModel(new DefaultComboBoxModel(new String[] {"housing", "utilities", "groceries", "personal", "entertainment", "other"}));
 		sortPaneButtons.add(comboBox);
+		
+		JPanel centerExpensePanel = new JPanel();
+		Expenses.add(centerExpensePanel, BorderLayout.CENTER);
+		SpringLayout sl_centerExpensePanel = new SpringLayout();
+		centerExpensePanel.setLayout(sl_centerExpensePanel);
+		
+		JLabel timeLabel_2 = new JLabel("Date:");
+		sl_centerExpensePanel.putConstraint(SpringLayout.NORTH, timeLabel_2, 80, SpringLayout.NORTH, centerExpensePanel);
+		sl_centerExpensePanel.putConstraint(SpringLayout.WEST, timeLabel_2, 10, SpringLayout.WEST, centerExpensePanel);
+		timeLabel_2.setFont(new Font("Tahoma", Font.BOLD, 16));
+		centerExpensePanel.add(timeLabel_2);
+		
+		JLabel dateDisplay_1 = new JLabel(Calendar.MONTH + "/" + Calendar.DATE + "/" + Year.now());
+		sl_centerExpensePanel.putConstraint(SpringLayout.NORTH, dateDisplay_1, 0, SpringLayout.NORTH, timeLabel_2);
+		sl_centerExpensePanel.putConstraint(SpringLayout.WEST, dateDisplay_1, 6, SpringLayout.EAST, timeLabel_2);
+		dateDisplay_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		centerExpensePanel.add(dateDisplay_1);
+		
+		JLabel timeLabel_1_1 = new JLabel("Month Controls");
+		sl_centerExpensePanel.putConstraint(SpringLayout.NORTH, timeLabel_1_1, 20, SpringLayout.NORTH, centerExpensePanel);
+		sl_centerExpensePanel.putConstraint(SpringLayout.WEST, timeLabel_1_1, 10, SpringLayout.WEST, centerExpensePanel);
+		timeLabel_1_1.setFont(new Font("Tahoma", Font.BOLD, 18));
+		centerExpensePanel.add(timeLabel_1_1);
+		
+		JButton newMonthBtn_1 = new JButton("New Month");
+		sl_centerExpensePanel.putConstraint(SpringLayout.NORTH, newMonthBtn_1, -9, SpringLayout.NORTH, timeLabel_2);
+		sl_centerExpensePanel.putConstraint(SpringLayout.EAST, newMonthBtn_1, -10, SpringLayout.EAST, centerExpensePanel);
+		newMonthBtn_1.setPreferredSize(new Dimension(120, 40));
+		newMonthBtn_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		centerExpensePanel.add(newMonthBtn_1);
+		newMonthBtn_1.addActionListener(this);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		
 		switch(e.getActionCommand()) 
 		{
 		case "Refresh Income":
@@ -462,9 +535,24 @@ public class mainWindow implements ActionListener {
 		case "Sort":
 			sortExpense();
 			break;
+		case "New Month":
+			newYear.newMonth();
+			refreshIncome();
+			refreshBalance();
+			refreshExpense();
+			refreshSavings();
+			break;
+		case "Show Manual":
+			showManual();
+			break;
+		
 		}
+	}
 		
-		
+	
+	public void showManual() {
+		JOptionPane.showMessageDialog(null, "This program is designed to assist users in managing their finances. In the Income tab, you can Set a savings value to aim towards, check your current savings, and create, delete, or refresh the income screen. ");
+		JOptionPane.showMessageDialog(null, "In the expense tab, you can create create, delete, and refresh a list of expenses, as well as sort them by category. ");
 	}
 	
 	public void newYear() {
@@ -552,7 +640,7 @@ public class mainWindow implements ActionListener {
 		String newLap = JOptionPane.showInputDialog("How many days are between your pay periods?");
 		if (newLap == null) return (double) 0;
 		if (isDouble(newLap)) {
-			if (Double.valueOf(newLap) < 0) return addIncomeLap();
+			if (Double.valueOf(newLap) < 1) return addIncomeLap();
 			}
 		if (isDouble(newLap)) {
 			return Double.parseDouble(newLap);
@@ -645,13 +733,17 @@ public class mainWindow implements ActionListener {
 	
 	public void refreshSavings() {
 		savingsValueText.setText("$" + newYear.getSetSavings());
-		currentSavingsValue.setText("$" + newYear.savingSetter());
+		currentSavingsValue.setText(newYear.savingSetter());
 	}
 	
 	public void setSavings() {
 		String newSavings = JOptionPane.showInputDialog("What's your current goal?");
 		if( newSavings.length() == 0 ) return;
+		
 		if (isDouble(newSavings)) {
+			if (Double.valueOf(newSavings) < 0) {
+				setSavings();
+			}
 			newYear.setSavings(Double.parseDouble(newSavings));
 			refreshSavings();
 		} else {

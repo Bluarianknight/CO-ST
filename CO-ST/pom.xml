@@ -8,6 +8,23 @@
   <build>
     <sourceDirectory>src</sourceDirectory>
     <plugins>
+		<plugin>
+		    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-maven-plugin</artifactId>
+    <executions>
+        <execution>
+            <goals>
+                <goal>repackage</goal>
+            </goals>
+            <configuration>
+                <classifier>spring-boot</classifier>
+                <mainClass>
+                 src.guiHandling.mainWindow
+                </mainClass>
+            </configuration>
+        </execution>
+    </executions>
+</plugin>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.8.1</version>

@@ -16,14 +16,18 @@ public class mainClass {
 	LocalDate checkDate = LocalDate.now();
 	
 	costMonth current = new costMonth();
-	int savings;
+	double savings;
 	
 	public mainClass() {
 		savings = 0;
 		
 	}
 			  
-	
+	public void newMonth() {
+		savings += current.getBalance();
+		current = new costMonth();
+		
+	}
 		
 	public void makeExpense(String newName, double newValue, String newCat) {
 		current.newExpense(newName, newValue, newCat);
@@ -97,15 +101,21 @@ public class mainClass {
 		return "$" + current.calcIncomingIncome();
 	}
 	
-	public double savingSetter() {
-		double bal = current.getBalance();
-		if (bal < savings && bal < current.getSetSavings() && bal > 0) {
-			return savings - (current.getSetSavings() - bal);
-		} else if (bal < savings && bal < current.getSetSavings() && bal < 0){
-			return savings - bal - current.getSetSavings();
-		} else {
-			return bal;
+	public String savingSetter() {
+		double newSaving = savings + current.getBalance();
+		double bal = current.getBalance() - this.getSetSavings();
+		if (bal > 0 && newSaving > this.getSetSavings()) {
+			return String.valueOf("$" +  Double.valueOf(newSaving + bal));
+		} else if (bal < 0 && newSaving > this.getSetSavings()) {
+			return String.valueOf("$" +  Double.valueOf(newSaving + this.getSetSavings()));
+		} else if (bal > 0 && newSaving < this.getSetSavings()) {
+			return String.valueOf("-$" + Double.valueOf(Math.abs(newSaving)));
+		} else if (savings < 0) {
+			return String.valueOf("-$" + Math.abs(newSaving));
 		}
+		savings = bal;
+		return String.valueOf("$" + savings);
+		
 	}
 	
 	public ArrayList<String> sortExpense(String category) {
