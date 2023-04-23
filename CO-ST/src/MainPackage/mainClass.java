@@ -15,6 +15,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
+import javax.swing.JOptionPane;
+
 import costPackage.Expense;
 import costPackage.Income;
 import costPackage.sortedExpense;
@@ -102,14 +104,16 @@ public class mainClass {
 		current.removeIncome(x);
 	}
 	
-	
+	public String returnIncomeTotal() {
+		return "$" + current.totalIncome();
+	}
 	
 	public double returnExpenseTotal() {
 		return current.returnExpenseTotal();
 	}
 	
-	public String calcIncomingIncome() {
-		return "$" + current.calcIncomingIncome();
+	public String calcTotalIncome() {
+		return "$" + current.calcTotalIncome();
 	}
 	
 	public String savingSetter() {
@@ -139,7 +143,13 @@ public class mainClass {
 	
 
 	public void Save(String fileLocation) {
-		File newFile = new File(fileLocation + ".txt");
+		File newFile;
+		if (fileLocation.contains(".txt")) {
+			newFile = new File(fileLocation);
+		} else {
+			newFile = new File(fileLocation + ".txt");	
+		}
+	
 		try {
 			FileWriter fileWriter = new FileWriter(newFile);
 			BufferedWriter newWriter = new BufferedWriter(fileWriter);
@@ -182,6 +192,7 @@ public class mainClass {
 			loadReader = new Scanner(loadFile);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
+			JOptionPane.showMessageDialog(null, "An error has occured. Please check to see if you've selected the correct file.");
 			e.printStackTrace();
 		}
 		while (loadReader.hasNextLine()) {
@@ -214,7 +225,7 @@ public class mainClass {
 				break;
 			}
 			if (i == 0) {
-				System.out.println("ERROR");
+				JOptionPane.showMessageDialog(null, "An error has occured. Please check to see if you've selected the correct file.");
 				break;
 			}
 			}

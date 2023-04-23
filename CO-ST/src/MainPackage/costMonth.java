@@ -18,7 +18,7 @@ public class costMonth {
 	// The Expense, Income, and theDate objects required to make costMonth work. Refer to classes for how they work.
 	Expense monthExpenses = new Expense();
 	Income monthIncome = new Income();
-	costDate theDate = new costDate();
+
 	Savings savings = new Savings();
 	// Set values for use in dates.
 	LocalDate setDate;
@@ -34,11 +34,7 @@ public class costMonth {
 	
 	// Sets the date to the current day when the month is created. 
 	public costMonth() {
-		setDate = theDate.returnDate();
-		setDay = theDate.returnDay();
-		setMonth = theDate.returnMonth();
-		setYear = theDate.returnYear();
-		lastCheckDate = theDate.returnDate();
+		
 		
 	}
 	
@@ -115,7 +111,7 @@ public class costMonth {
 	
 	// Returns the balance of income and expenses calculated together as a double.
 	public double getBalance() {
-		double balance = monthIncome.returnTotalCost() - monthExpenses.returnTotalCost();
+		double balance = calcTotalIncome() - monthExpenses.returnTotalCost();
 		return balance;
 	}
 	
@@ -175,19 +171,17 @@ public class costMonth {
 		monthExpenses.expenseRemove(x);
 	}
 	
-	public double calcSingleIncomingIncome(int a) {
-		int x = 0;
-		for (double z = theDate.remainderDays(); z > monthIncome.returnIncomeLap(a); z = z - monthIncome.returnIncomeLap(a)) {
-			x += monthIncome.returnCostValue(a);
-		}
-		return x;
+	public double totalIncome() {
+		return monthIncome.returnTotalCost();
 	}
 	
-	public double calcIncomingIncome() {
+	
+	
+	public double calcTotalIncome() {
 		int x = 0;
 		
-		for (int y = 0; y < monthIncome.returnIncomeLength(); y++) {
-			x += calcSingleIncomingIncome(y);
+		for (int y = 0; y < monthIncome.returnLength(); y++) {
+			x += monthIncome.getTotal(y);
 		}
 		
 		return x;

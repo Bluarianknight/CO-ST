@@ -6,12 +6,14 @@ public class Income extends BaseCash {
 	
 	// Name may change - refers to time between paychecks. 
 	ArrayList<Double> totalIncomeLap = new ArrayList<Double>();
+	ArrayList<Double> calcIncome = new ArrayList<Double>();
 	
 	// Adds a new income, with a name, double cost, and an incomeLap for calculating monthly pay.
 	public void newIncome(String newName, double newCost, double newIncomeLap) {
 		this.setBase(newCost, newName);
 		totalIncomeLap.add(newIncomeLap);
 		this.setDisplayed(totalIncomeLap.size() + ": " + newName + ": $" + newCost + ", pays every " + newIncomeLap + " days.");
+		calcSingleTotalIncome(newIncomeLap, newCost);
 	}
 	
 	public void refreshIncomeDisplay() {
@@ -20,10 +22,23 @@ public class Income extends BaseCash {
 		}
 	}
 	
+	
+	public void calcSingleTotalIncome(double lap, double value) {
+		double x = 0;
+		for (double z = 30; z > lap; z = z - lap) {
+			x += value;
+		}
+		calcIncome.add(x);
+	}
+	
+	public double getTotal(int x) {
+		return calcIncome.get(x);
+	}
+	
 	public void removeIncome(int x) {
-		System.out.println(x);
 		this.removeAt(x);
 		totalIncomeLap.remove(x);
+		calcIncome.remove(x);
 	}
 	
 	// Refer to returnCostValue at BaseCash.
