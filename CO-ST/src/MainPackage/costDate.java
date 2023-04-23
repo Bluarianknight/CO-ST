@@ -1,4 +1,11 @@
-package timePackage;
+
+/*
+ * This class was originally going to manage the various classes that would keep track of the date, calculate month-by-month investment, and so forth. But due to time constraints, 
+ * the only real use of this class is to provide the days left within the month, to calculate income to be recieved.
+ */
+
+
+package MainPackage;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.YearMonth;
@@ -34,7 +41,7 @@ public class costDate {
 		return currentYear;
 	}
 	 
-	
+	// Checks the amount of days left in a month. 
 	public int remainderDays() {
 		int length = currentYearMonth.lengthOfMonth();
 		int days = currentDay;

@@ -8,8 +8,17 @@ import java.time.LocalTime;
 import java.time.Month;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.io.BufferedWriter;
+import java.io.File; 
+import java.io.FileNotFoundException;
+import java.io.FileWriter;  
+import java.io.IOException;
+import java.util.Scanner;
 
+import costPackage.Expense;
+import costPackage.Income;
 import costPackage.sortedExpense;
+
 
 public class mainClass {
 
@@ -25,7 +34,9 @@ public class mainClass {
 			  
 	public void newMonth() {
 		savings += current.getBalance();
+		double SetSavings = current.getSetSavings();
 		current = new costMonth();
+		current.setSetSavings(SetSavings);
 		
 	}
 		
@@ -105,15 +116,10 @@ public class mainClass {
 		double newSaving = savings + current.getBalance();
 		double bal = current.getBalance() - this.getSetSavings();
 		if (bal > 0 && newSaving > this.getSetSavings()) {
-			return String.valueOf("$" +  Double.valueOf(newSaving + bal));
+			return String.valueOf("$" +  Double.valueOf(newSaving));
 		} else if (bal < 0 && newSaving > this.getSetSavings()) {
-			return String.valueOf("$" +  Double.valueOf(newSaving + this.getSetSavings()));
-		} else if (bal > 0 && newSaving < this.getSetSavings()) {
-			return String.valueOf("-$" + Double.valueOf(Math.abs(newSaving)));
-		} else if (savings < 0) {
-			return String.valueOf("-$" + Math.abs(newSaving));
+			return String.valueOf("$" +  Double.valueOf(newSaving));
 		}
-		savings = bal;
 		return String.valueOf("$" + savings);
 		
 	}
@@ -131,11 +137,97 @@ public class mainClass {
 	}
 	
 	
+
 	public void Save(String fileLocation) {
+		File newFile = new File(fileLocation + ".txt");
+		try {
+			FileWriter fileWriter = new FileWriter(newFile);
+			BufferedWriter newWriter = new BufferedWriter(fileWriter);
+			
+			
+			
+			newWriter.write("EXPENSE");
+			newWriter.newLine();
+			for (int i = 0; i < current.findExpenseLength(); i++) {
+				newWriter.write(current.getExpenseName(i).replace(" ", "_") + " " + current.getExpenseValue(i) + " " + current.getExpenseCategory(i));
+				newWriter.newLine();
+			}
+			newWriter.write("INCOME");
+			newWriter.newLine();
+			for (int j = 0; j < current.findIncomeLength(); j++) {
+				newWriter.write(current.getIncomeName(j).replace(" ", "_") + " " + current.getIncomeValue(j) + " " + current.getIncomeLap(j));
+				newWriter.newLine();
+			}
+			newWriter.write("SAVING");
+			newWriter.newLine();
+			newWriter.write(String.valueOf(current.getSetSavings()));
+			newWriter.newLine();
+			newWriter.write(String.valueOf(savings));
+			newWriter.close();
+		} catch (IOException e) {
+			
+			e.printStackTrace();
+		}
+		
+		
 		
 	}
 	
-	public void Load(String fileLocation) {
-		
+
+	public void Load(File fileToSave) {
+		File loadFile = fileToSave; 
+		Scanner loadReader = null;
+		int i = 0;
+		try {
+			loadReader = new Scanner(loadFile);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		while (loadReader.hasNextLine()) {
+			String read = loadReader.next();
+			if (read.equals("EXPENSE")) {
+				i = 1;
+			}else if (read.equals("INCOME")) {
+				i = 2;
+			} else if (read.equals("SAVING")) {
+				i = 3;
+			} else {
+			
+			switch (i) {
+			case 1:
+				String newNameExpense = read.replace("_", " ");
+				double newExpenseValue = Double.valueOf(loadReader.next());
+				String newCategory = loadReader.next();
+				
+				makeExpense(newNameExpense, newExpenseValue, newCategory);
+				break;
+			case 2:
+				String newIncomeName = read.replace("_", " ");
+				double newIncomeValue = Double.valueOf(loadReader.next());
+				double newIncomeLap = Double.valueOf(loadReader.next());
+				makeIncome(newIncomeName, newIncomeValue, newIncomeLap);
+				break;
+			case 3:
+				current.setSetSavings(Double.valueOf(read));
+				savings = Double.valueOf(loadReader.next());
+				break;
+			}
+			if (i == 0) {
+				System.out.println("ERROR");
+				break;
+			}
+			}
+		}
+	}
+	
+	
+	public void Demo() {
+		this.makeExpense("Car", 50000, "other");
+		this.makeExpense("Cat", 2000, "housing");
+		this.makeIncome("New Car Driving", 4000, 5);
+		this.makeIncome("Cat Shows", 10000, 1);
+		this.setSavings(5000);
+		savings = 4000;
 	}
 }

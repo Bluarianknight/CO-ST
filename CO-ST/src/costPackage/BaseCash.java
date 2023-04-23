@@ -1,3 +1,12 @@
+/*
+ * The base class for the Expense and Income class. Used to set and collect the values of both classes. 
+ * 
+ * Provides three array lists ; totalCost and totalCostNames keeps the names and costs of the class, while displayedCost provides a string that is used for displaying the values in lists.s
+ * 
+ */
+
+
+
 package costPackage;
 import java.util.ArrayList;
 
@@ -18,17 +27,19 @@ public class BaseCash {
 		return totalCost.get(Where);
 	}
 	
+	// Remove a value from all arrays at index x. Used for removing expense/income.
 	public void removeAt(int x) {
 		totalCost.remove(x);
 		totalCostNames.remove(x);
 		displayedCost.remove(x);
 	}
-	
+	// Used to set the cost and name for child classes. 
 	public void setBase(double newCost, String newName) {
 		totalCost.add(newCost);
 		totalCostNames.add(newName);
 	}
 	
+	// Returns the name of 
 	public String getCostName(String name) {
 		return totalCostNames.get(findCostNamesLocation(name));
 	}
@@ -46,10 +57,13 @@ public class BaseCash {
 		return displayedCost.get(Where);
 	}
 	
+	public int returnLength() {
+		return totalCost.size();
+	}
+	
 	
 	public void setDisplayed(String one) {
 		displayedCost.add(one);
-		System.out.println(displayedCost);
 	}
 	
 	public ArrayList<String> returnDisplayed() {

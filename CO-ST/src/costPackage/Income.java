@@ -14,6 +14,12 @@ public class Income extends BaseCash {
 		this.setDisplayed(totalIncomeLap.size() + ": " + newName + ": $" + newCost + ", pays every " + newIncomeLap + " days.");
 	}
 	
+	public void refreshIncomeDisplay() {
+		for (int i = 0; i < totalIncomeLap.size(); i++) {
+			this.setDisplayed(i + 1 + ": " + this.returnCostName(i) + ": $" + this.returnCostValue(i) + ", pays every " + this.returnIncomeLap(i) + " days.");
+		}
+	}
+	
 	public void removeIncome(int x) {
 		System.out.println(x);
 		this.removeAt(x);

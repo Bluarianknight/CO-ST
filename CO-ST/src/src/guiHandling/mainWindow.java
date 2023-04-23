@@ -1,5 +1,15 @@
-package src.guiHandling;
 
+
+
+/*
+ * This class is the main GUI interface, and the main class, for this program.
+ * 
+ * It handles all of the graphic interface variables, 
+ * 
+ */
+
+
+package src.guiHandling;
 import java.awt.BorderLayout;
 
 import java.awt.EventQueue;
@@ -61,6 +71,7 @@ public class mainWindow implements ActionListener {
 	JList<Object> sortedDisplay = new JList<Object>(sortedList);
 	
 	Calendar now = Calendar.getInstance();
+	
 	
 	
 	@SuppressWarnings("rawtypes")
@@ -164,45 +175,42 @@ public class mainWindow implements ActionListener {
 		tabbedPane.addTab("Income", null, Income, null);
 		Income.setLayout(new BorderLayout(0, 0));
 		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setPreferredSize(new Dimension(400, 300));
-		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		Income.add(scrollPane, BorderLayout.EAST);
+		JScrollPane incomeListScrollPane = new JScrollPane();
+		incomeListScrollPane.setPreferredSize(new Dimension(400, 300));
+		incomeListScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		incomeListScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		Income.add(incomeListScrollPane, BorderLayout.EAST);
 		displayedList.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		
 		
 		displayedList.setLayoutOrientation(JList.VERTICAL_WRAP);
 		displayedList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		scrollPane.setViewportView(displayedList);
+		incomeListScrollPane.setViewportView(displayedList);
 		
-		JPanel panel = new JPanel();
-		panel.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
-		panel.setPreferredSize(new Dimension(10, 50));
-		panel.setMinimumSize(new Dimension(100, 50));
-		scrollPane.setColumnHeaderView(panel);
-		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		JPanel incomeButtonPanel = new JPanel();
+		incomeButtonPanel.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+		incomeButtonPanel.setPreferredSize(new Dimension(10, 50));
+		incomeButtonPanel.setMinimumSize(new Dimension(100, 50));
+		incomeListScrollPane.setColumnHeaderView(incomeButtonPanel);
+		incomeButtonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
-		JButton backButton = new JButton("New Income");
-		backButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		backButton.addActionListener(this);
-		backButton.setPreferredSize(new Dimension(120, 40));
-		panel.add(backButton);
+		JButton newIncomeButton = new JButton("New Income");
+		newIncomeButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		newIncomeButton.addActionListener(this);
+		newIncomeButton.setPreferredSize(new Dimension(120, 40));
+		incomeButtonPanel.add(newIncomeButton);
 		
-		JButton delButton = new JButton("Delete Income");
-		delButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		delButton.setPreferredSize(new Dimension(120, 40));
-		panel.add(delButton);
-		delButton.addActionListener(this);
+		JButton delIncomeButton = new JButton("Delete Income");
+		delIncomeButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		delIncomeButton.setPreferredSize(new Dimension(120, 40));
+		incomeButtonPanel.add(delIncomeButton);
+		delIncomeButton.addActionListener(this);
 		
-		JButton refreshButton = new JButton("Refresh Income");
-		refreshButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		refreshButton.setPreferredSize(new Dimension(120, 40));
-		refreshButton.addActionListener(this);
-		panel.add(refreshButton);
-		
-		JTabbedPane tabbedPane_1 = new JTabbedPane(JTabbedPane.TOP);
-		Income.add(tabbedPane_1, BorderLayout.NORTH);
+		JButton refreshIncomeButton = new JButton("Refresh Income");
+		refreshIncomeButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		refreshIncomeButton.setPreferredSize(new Dimension(120, 40));
+		refreshIncomeButton.addActionListener(this);
+		incomeButtonPanel.add(refreshIncomeButton);
 		
 		JPanel Summary = new JPanel();
 		Income.add(Summary, BorderLayout.SOUTH);
@@ -263,40 +271,41 @@ public class mainWindow implements ActionListener {
 		SavingTitle.setFont(new Font("Tahoma", Font.BOLD, 18));
 		panel_1.add(SavingTitle);
 		
-		JPanel panel_2 = new JPanel();
-		panel_2.setBackground(SystemColor.inactiveCaptionBorder);
-		sl_panel_1.putConstraint(SpringLayout.NORTH, panel_2, 3, SpringLayout.SOUTH, SavingTitle);
-		sl_panel_1.putConstraint(SpringLayout.WEST, panel_2, 10, SpringLayout.WEST, panel_1);
-		sl_panel_1.putConstraint(SpringLayout.SOUTH, panel_2, 33, SpringLayout.SOUTH, SavingTitle);
-		sl_panel_1.putConstraint(SpringLayout.EAST, panel_2, 264, SpringLayout.WEST, panel_1);
-		panel_1.add(panel_2);
+		JPanel savingsGoalPanel = new JPanel();
+		savingsGoalPanel.setBackground(SystemColor.inactiveCaptionBorder);
+		sl_panel_1.putConstraint(SpringLayout.NORTH, savingsGoalPanel, 3, SpringLayout.SOUTH, SavingTitle);
+		sl_panel_1.putConstraint(SpringLayout.WEST, savingsGoalPanel, 10, SpringLayout.WEST, panel_1);
+		sl_panel_1.putConstraint(SpringLayout.SOUTH, savingsGoalPanel, 33, SpringLayout.SOUTH, SavingTitle);
+		sl_panel_1.putConstraint(SpringLayout.EAST, savingsGoalPanel, 264, SpringLayout.WEST, panel_1);
+		panel_1.add(savingsGoalPanel);
 		
-		JPanel panel_2_1 = new JPanel();
-		panel_2_1.setBackground(SystemColor.inactiveCaptionBorder);
-		sl_panel_1.putConstraint(SpringLayout.NORTH, panel_2_1, 6, SpringLayout.SOUTH, panel_2);
-		sl_panel_1.putConstraint(SpringLayout.WEST, panel_2_1, 10, SpringLayout.WEST, panel_1);
-		sl_panel_1.putConstraint(SpringLayout.SOUTH, panel_2_1, 36, SpringLayout.SOUTH, panel_2);
-		sl_panel_1.putConstraint(SpringLayout.EAST, panel_2_1, 0, SpringLayout.EAST, panel_2);
+		JPanel currentSavingsPanel = new JPanel();
+		currentSavingsPanel.setBackground(SystemColor.inactiveCaptionBorder);
+		sl_panel_1.putConstraint(SpringLayout.NORTH, currentSavingsPanel, 6, SpringLayout.SOUTH, savingsGoalPanel);
+		sl_panel_1.putConstraint(SpringLayout.WEST, currentSavingsPanel, 10, SpringLayout.WEST, panel_1);
+		sl_panel_1.putConstraint(SpringLayout.SOUTH, currentSavingsPanel, 36, SpringLayout.SOUTH, savingsGoalPanel);
+		sl_panel_1.putConstraint(SpringLayout.EAST, currentSavingsPanel, 0, SpringLayout.EAST, savingsGoalPanel);
 		
 		JLabel savingsText = new JLabel("Savings Goal:");
 		savingsText.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		savingsText.setHorizontalAlignment(SwingConstants.CENTER);
-		panel_2.add(savingsText);
+		savingsGoalPanel.add(savingsText);
 		
 		savingsValueText = new JLabel("$0.00");
 		savingsValueText.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		panel_2.add(savingsValueText);
-		panel_1.add(panel_2_1);
+		savingsGoalPanel.add(savingsValueText);
+		panel_1.add(currentSavingsPanel);
 		
 		JLabel currentSavingsText = new JLabel("Current Savings:");
 		currentSavingsText.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		panel_2_1.add(currentSavingsText);
+		currentSavingsPanel.add(currentSavingsText);
 		
 		currentSavingsValue = new JLabel("$0.00");
 		currentSavingsValue.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		panel_2_1.add(currentSavingsValue);
+		currentSavingsPanel.add(currentSavingsValue);
 		
 		JButton newSavingsButton = new JButton("Set Savings Goal");
+		newSavingsButton.setToolTipText("Sets the total savings you want by the end of the month. ");
 		sl_panel_1.putConstraint(SpringLayout.WEST, newSavingsButton, 10, SpringLayout.WEST, panel_1);
 		sl_panel_1.putConstraint(SpringLayout.SOUTH, newSavingsButton, -10, SpringLayout.SOUTH, panel_1);
 		newSavingsButton.setPreferredSize(new Dimension(120, 40));
@@ -330,11 +339,11 @@ public class mainWindow implements ActionListener {
 		timeLabel.setFont(new Font("Tahoma", Font.BOLD, 16));
 		timePanel.add(timeLabel);
 		
-		JPanel suggestionsPanelIncome = new JPanel();
-		sl_OverviewPanel.putConstraint(SpringLayout.NORTH, suggestionsPanelIncome, 6, SpringLayout.SOUTH, panel_1);
-		sl_OverviewPanel.putConstraint(SpringLayout.WEST, suggestionsPanelIncome, 0, SpringLayout.WEST, panel_1);
-		sl_OverviewPanel.putConstraint(SpringLayout.SOUTH, suggestionsPanelIncome, 257, SpringLayout.SOUTH, panel_1);
-		sl_OverviewPanel.putConstraint(SpringLayout.EAST, suggestionsPanelIncome, 0, SpringLayout.EAST, timePanel);
+		JPanel blankPanel = new JPanel();
+		sl_OverviewPanel.putConstraint(SpringLayout.NORTH, blankPanel, 6, SpringLayout.SOUTH, panel_1);
+		sl_OverviewPanel.putConstraint(SpringLayout.WEST, blankPanel, 0, SpringLayout.WEST, panel_1);
+		sl_OverviewPanel.putConstraint(SpringLayout.SOUTH, blankPanel, 257, SpringLayout.SOUTH, panel_1);
+		sl_OverviewPanel.putConstraint(SpringLayout.EAST, blankPanel, 0, SpringLayout.EAST, timePanel);
 		
 		JLabel dateDisplay = new JLabel(Calendar.MONTH + "/" + Calendar.DATE + "/" + Year.now());
 		sl_timePanel.putConstraint(SpringLayout.NORTH, dateDisplay, 15, SpringLayout.NORTH, timeLabel);
@@ -344,24 +353,41 @@ public class mainWindow implements ActionListener {
 		timePanel.add(dateDisplay);
 		
 		JButton newMonthBtn = new JButton("New Month");
+		newMonthBtn.setToolTipText("Press this to move to the next month.\r\nThis will remove all expenses and income values - leaving only the set savings and current savings. \r\n\r\nUse when you've moved to the next month.");
 		sl_timePanel.putConstraint(SpringLayout.NORTH, newMonthBtn, 16, SpringLayout.NORTH, timePanel);
 		sl_timePanel.putConstraint(SpringLayout.EAST, newMonthBtn, -10, SpringLayout.EAST, timePanel);
 		newMonthBtn.setPreferredSize(new Dimension(120, 40));
 		newMonthBtn.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		timePanel.add(newMonthBtn);
 		
-		JLabel timeLabel_1 = new JLabel("Month Controls");
-		sl_timePanel.putConstraint(SpringLayout.NORTH, timeLabel_1, 0, SpringLayout.NORTH, newMonthBtn);
-		sl_timePanel.putConstraint(SpringLayout.WEST, timeLabel_1, 10, SpringLayout.WEST, timePanel);
-		sl_timePanel.putConstraint(SpringLayout.EAST, timeLabel_1, 160, SpringLayout.WEST, timePanel);
-		timeLabel_1.setFont(new Font("Tahoma", Font.BOLD, 18));
-		timePanel.add(timeLabel_1);
+		JLabel monthTitle = new JLabel("Month Controls");
+		sl_timePanel.putConstraint(SpringLayout.NORTH, monthTitle, 0, SpringLayout.NORTH, newMonthBtn);
+		sl_timePanel.putConstraint(SpringLayout.WEST, monthTitle, 10, SpringLayout.WEST, timePanel);
+		sl_timePanel.putConstraint(SpringLayout.EAST, monthTitle, 160, SpringLayout.WEST, timePanel);
+		monthTitle.setFont(new Font("Tahoma", Font.BOLD, 18));
+		timePanel.add(monthTitle);
 		newMonthBtn.addActionListener(this);
 		
-		suggestionsPanelIncome.setBackground(Color.WHITE);
-		OverviewPanel.add(suggestionsPanelIncome);
-		SpringLayout sl_suggestionsPanelIncome = new SpringLayout();
-		suggestionsPanelIncome.setLayout(sl_suggestionsPanelIncome);
+		blankPanel.setBackground(Color.WHITE);
+		OverviewPanel.add(blankPanel);
+		SpringLayout sl_blankPanel = new SpringLayout();
+		blankPanel.setLayout(sl_blankPanel);
+		
+		JButton demoButton = new JButton("Start Demo");
+		demoButton.setToolTipText("Starts the demo by providing example values.");
+		demoButton.setPreferredSize(new Dimension(120, 40));
+		demoButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		blankPanel.add(demoButton);
+		demoButton.addActionListener(this);
+		
+		JLabel DemoTitle = new JLabel("Demo");
+		sl_blankPanel.putConstraint(SpringLayout.SOUTH, DemoTitle, -194, SpringLayout.SOUTH, blankPanel);
+		sl_blankPanel.putConstraint(SpringLayout.NORTH, demoButton, -7, SpringLayout.NORTH, DemoTitle);
+		sl_blankPanel.putConstraint(SpringLayout.WEST, demoButton, 6, SpringLayout.EAST, DemoTitle);
+		sl_blankPanel.putConstraint(SpringLayout.WEST, DemoTitle, 10, SpringLayout.WEST, blankPanel);
+		DemoTitle.setHorizontalAlignment(SwingConstants.CENTER);
+		DemoTitle.setFont(new Font("Tahoma", Font.BOLD, 18));
+		blankPanel.add(DemoTitle);
 		newSavingsButton.addActionListener(this);
 		
 		JPanel Expenses = new JPanel();
@@ -380,29 +406,29 @@ public class mainWindow implements ActionListener {
 		expenseDisplay.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		expenseListPane.setViewportView(expenseDisplay);
 		
-		JPanel panel_3 = new JPanel();
-		panel_3.setPreferredSize(new Dimension(10, 50));
-		panel_3.setMinimumSize(new Dimension(100, 50));
-		panel_3.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
-		expenseListPane.setColumnHeaderView(panel_3);
-		panel_3.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		JPanel expenseButtonPanel = new JPanel();
+		expenseButtonPanel.setPreferredSize(new Dimension(10, 50));
+		expenseButtonPanel.setMinimumSize(new Dimension(100, 50));
+		expenseButtonPanel.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+		expenseListPane.setColumnHeaderView(expenseButtonPanel);
+		expenseButtonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
 		JButton newExpenseButton = new JButton("New Expense");
 		newExpenseButton.setPreferredSize(new Dimension(120, 40));
 		newExpenseButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		panel_3.add(newExpenseButton);
+		expenseButtonPanel.add(newExpenseButton);
 		newExpenseButton.addActionListener(this);
 		
 		JButton delExpenseButton = new JButton("Delete Expense");
 		delExpenseButton.setPreferredSize(new Dimension(120, 40));
 		delExpenseButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		panel_3.add(delExpenseButton);
+		expenseButtonPanel.add(delExpenseButton);
 		delExpenseButton.addActionListener(this);
 		
 		JButton refreshExpenseButton = new JButton("Refresh Expense");
 		refreshExpenseButton.setPreferredSize(new Dimension(120, 40));
 		refreshExpenseButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		panel_3.add(refreshExpenseButton);
+		expenseButtonPanel.add(refreshExpenseButton);
 		refreshExpenseButton.addActionListener(this);
 		
 		JPanel summaryExpense = new JPanel();
@@ -452,6 +478,7 @@ public class mainWindow implements ActionListener {
 		sortPaneButtons.add(sortExpenses);
 		
 		JButton sortExpensesButton = new JButton("Sort");
+		sortExpensesButton.setToolTipText("Sort your current expenses by a specific category. It will be rated from most to least expensive!");
 		sortExpensesButton.setPreferredSize(new Dimension(120, 40));
 		sortExpensesButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		sortPaneButtons.add(sortExpensesButton);
@@ -486,6 +513,7 @@ public class mainWindow implements ActionListener {
 		centerExpensePanel.add(timeLabel_1_1);
 		
 		JButton newMonthBtn_1 = new JButton("New Month");
+		newMonthBtn_1.setToolTipText("Press this to move to the next month.\r\nThis will remove all expenses and income values - leaving only the set savings and current savings. \r\n\r\nUse when you've moved to the next month.");
 		sl_centerExpensePanel.putConstraint(SpringLayout.NORTH, newMonthBtn_1, -9, SpringLayout.NORTH, timeLabel_2);
 		sl_centerExpensePanel.putConstraint(SpringLayout.EAST, newMonthBtn_1, -10, SpringLayout.EAST, centerExpensePanel);
 		newMonthBtn_1.setPreferredSize(new Dimension(120, 40));
@@ -545,22 +573,35 @@ public class mainWindow implements ActionListener {
 		case "Show Manual":
 			showManual();
 			break;
+		case "Start Demo":
+			startDemo();
+			break;
 		
 		}
 	}
 		
 	
-	public void showManual() {
-		JOptionPane.showMessageDialog(null, "This program is designed to assist users in managing their finances. In the Income tab, you can Set a savings value to aim towards, check your current savings, and create, delete, or refresh the income screen. ");
-		JOptionPane.showMessageDialog(null, "In the expense tab, you can create create, delete, and refresh a list of expenses, as well as sort them by category. ");
-	}
-	
-	public void newYear() {
-		newYear = new mainClass();
+	public void Refresh() {
 		refreshIncome();
 		refreshBalance();
 		refreshExpense();
 		refreshSavings();
+	}
+	
+	public void startDemo() {
+		newYear.Demo();
+		Refresh();
+	}
+	
+	public void showManual() {
+		JOptionPane.showMessageDialog(null, "This program is designed to assist users in managing their finances. In the Income tab, you can Set a savings value to aim towards, check your current savings, and create, delete, or refresh the income screen. ");
+		JOptionPane.showMessageDialog(null, "In the expense tab, you can create create, delete, and refresh a list of expenses, as well as sort them by category. ");
+		JOptionPane.showMessageDialog(null, "If you're ever confused on what a button does, hover over it! The tooltip will help you.");
+	}
+	
+	public void newYear() {
+		newYear = new mainClass();
+		Refresh();
 	}
 	
 	
@@ -574,6 +615,7 @@ public class mainWindow implements ActionListener {
 	}
 	
 	public void load() {
+		
 		JFrame parentFrame = new JFrame();
 		 
 		JFileChooser fileChooser = new JFileChooser();
@@ -582,9 +624,11 @@ public class mainWindow implements ActionListener {
 		int userSelection = fileChooser.showOpenDialog(parentFrame);
 		 
 		if (userSelection == JFileChooser.APPROVE_OPTION) {
+			newYear();
 		    File fileToSave = fileChooser.getSelectedFile();
-		    String fileLocation = fileToSave.getAbsolutePath();
-		    newYear.Load(fileLocation);
+		    newYear.Load(fileToSave);
+		    
+		    Refresh();
 	}
 	}
 	
@@ -623,10 +667,10 @@ public class mainWindow implements ActionListener {
 	}
 	
 	public Double addIncomeValue() {
-		String newValue = JOptionPane.showInputDialog("What's the value of the income?");
+		String newValue = JOptionPane.showInputDialog("What's the value of the income? (Please input between 1 and 9999999)");
 		if (newValue == null) return (double) 0;
 		if (isDouble(newValue)) {
-			if (Double.valueOf(newValue) < 0) return addIncomeValue();
+			if (Double.valueOf(newValue) < 0 || newValue.length() > 7) return addIncomeValue();
 			}
 		
 		if (isDouble(newValue)) {
@@ -637,10 +681,10 @@ public class mainWindow implements ActionListener {
 	}
 	
 	public Double addIncomeLap() {
-		String newLap = JOptionPane.showInputDialog("How many days are between your pay periods?");
+		String newLap = JOptionPane.showInputDialog("How many days are between your pay periods? (Please input a number between 1 and 30).");
 		if (newLap == null) return (double) 0;
 		if (isDouble(newLap)) {
-			if (Double.valueOf(newLap) < 1) return addIncomeLap();
+			if (Double.valueOf(newLap) < 1 || newLap.length() > 30) return addIncomeLap();
 			}
 		if (isDouble(newLap)) {
 			return Double.parseDouble(newLap);
@@ -655,10 +699,10 @@ public class mainWindow implements ActionListener {
 	}
 	
 	public Double addExpenseValue() {
-		String newValue = JOptionPane.showInputDialog("What's the cost value of the expense?");
+		String newValue = JOptionPane.showInputDialog("What's the cost value of the expense? (Please input between 1 and 9999999)");
 		if (newValue == null) return (double) 0;
 		if (isDouble(newValue)) {
-		if (Double.valueOf(newValue) < 0) return addExpenseValue();
+		if (Double.valueOf(newValue) < 0 || newValue.length() > 7) return addExpenseValue();
 		}
 		if (isDouble(newValue)) {
 			return Double.parseDouble(newValue);
@@ -741,7 +785,7 @@ public class mainWindow implements ActionListener {
 		if( newSavings.length() == 0 ) return;
 		
 		if (isDouble(newSavings)) {
-			if (Double.valueOf(newSavings) < 0) {
+			if (Double.valueOf(newSavings) < 0 || newSavings.length() > 7) {
 				setSavings();
 			}
 			newYear.setSavings(Double.parseDouble(newSavings));

@@ -1,3 +1,7 @@
+
+
+
+
 package costPackage;
 
 
@@ -23,6 +27,10 @@ public class sortedExpense implements Comparable<sortedExpense> {
 	
 	public double returnCost() {
 		return totalCost;
+	}
+	
+	public String returnCategory() {
+		return category;
 	}
 
 	@Override

@@ -16,6 +16,12 @@ public class Expense extends BaseCash {
 		this.setDisplayed(expenseCategory.size() + ": " + newName +  " - $" + newCost + " - category: " + newCategory);
 	}
 	
+	public void refreshExpenseDisplay() {
+		for (int i = 0; i < expenseCategory.size(); i++) {
+			this.setDisplayed(expenseCategory.size() + ": " + this.returnCostName(i) +  " - $" + this.returnCostValue(i) + " - category: " + this.returnExpenseCategory(i));
+		}
+	}
+	
 	// Returns the variable of CostValue at Where.
 	public double returnExpenseValue(int Where) {
 		return super.returnCostValue(Where);
@@ -40,7 +46,7 @@ public class Expense extends BaseCash {
 	}
 	
 	public int returnExpenseLength() {
-		return expenseCategory.size();
+		return this.returnLength();
 	}
 	
 	// Uses findCostNamesLocation, refer to BaseCash for documentation.
