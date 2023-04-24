@@ -661,7 +661,7 @@ public class mainWindow implements ActionListener {
 		} 
 	}
 	
-	// Takes the category selected in 
+	// Takes the category selected in the categoryComboBox.
 	public void sortExpense() {
 		String category = (String) categoryComboBox.getSelectedItem();
 		sortedList.clear();
@@ -841,6 +841,7 @@ public class mainWindow implements ActionListener {
 		}
 	}
 	
+	// Refreshes the balances and income/expenses values in the summaries of both Income and Expense panels.
 	public void refreshBalance() {
 		balTextValue.setText(newYear.getSetBalance());
 		incomeTextValue.setText(newYear.calcTotalIncome());
@@ -850,11 +851,13 @@ public class mainWindow implements ActionListener {
 		
 	}
 	
+	// Refreshes the savings variables in the savingsPanel.
 	public void refreshSavings() {
 		savingsValueText.setText("$" + newYear.getSetSavings());
 		currentSavingsValue.setText(newYear.savingSetter());
 	}
 	
+	// Sets the setSavings variable, by a JOptionPane. If the user cancels or enters nothing, the function is returned. Otherwise, if the entered input is not a double, it is repeated recursively.
 	public void setSavings() {
 		String newSavings = JOptionPane.showInputDialog("What's your current goal?");
 		if( newSavings.length() == 0 ) return;

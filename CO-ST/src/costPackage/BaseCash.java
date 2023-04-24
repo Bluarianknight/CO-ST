@@ -1,7 +1,7 @@
 /*
  * The base class for the Expense and Income class. Used to set and collect the values of both classes. 
  * 
- * Provides three array lists ; totalCost and totalCostNames keeps the names and costs of the class, while displayedCost provides a string that is used for displaying the values in lists.s
+ * Provides three array lists ; totalCost and totalCostNames keeps the names and costs of the class, while displayedCost provides a string that is used for displaying the values in lists.
  * 
  */
 
@@ -16,6 +16,7 @@ import java.util.ArrayList;
 public class BaseCash {
 	/* totalCost and totalCostNames are used to store the variables for the expenses and income. They are stored
 	 * at the same time to ensure they are the same. 
+	 * As well, displayedCost is used to display out to the graphical interface, and is contained as a string.
 	*/
 	private ArrayList<Double> totalCost = new ArrayList<Double>();
 	private ArrayList<String> totalCostNames = new ArrayList<String>();
@@ -38,59 +39,39 @@ public class BaseCash {
 		totalCost.add(newCost);
 		totalCostNames.add(newName);
 	}
-	
-	// Returns the name of 
-	public String getCostName(String name) {
-		return totalCostNames.get(findCostNamesLocation(name));
-	}
-	
-	public double getCost(String name) {
-		return totalCost.get(findCostNamesLocation(name));
-	}
+
 	
 	// Returns the TotalCostName value of the array at int Where.
 	public String returnCostName(int Where) {
 		return totalCostNames.get(Where);
 	}
 	
+	// Returns the displayedCost array list at int Where.
 	public String returnDisplayed(int Where) {
 		return displayedCost.get(Where);
 	}
 	
+	// Returns the array length of totalCost.
 	public int returnLength() {
 		return totalCost.size();
 	}
 	
-	
+	// Adds to the displayedCost array, and used in creation of income and expenses.
 	public void setDisplayed(String one) {
 		displayedCost.add(one);
 	}
 	
+	// Returns the entire displayedCost arrayList.
 	public ArrayList<String> returnDisplayed() {
 		return displayedCost;
 	}
 	
 
-	
+	// Returns the size of displayedCost.
 	public int displayedLength() {
 		return displayedCost.size();
 	}
 	
-	// Finds a variable in the array by searching for it's name. Will return 999 if not found - needs to be changed.
-	
-	public int findCostNamesLocation(String What) {
-		if (totalCostNames.size() == 0) {
-			return 0;
-		}
-		
-		for (int i = 0; i < totalCostNames.size() - 1; i++) {
-			if (this.returnCostName(i).equalsIgnoreCase(What)) {
-				return i;
-			}
-				
-			}
-		return 0;
-	}
 	
 	// Returns the size of an array. Used for testing.
 	public int returnSize() {

@@ -1,9 +1,11 @@
-package MainPackage;
-// LocalDate and Month will be used to help keep track of the current date - useful for income calculations, and knowing what month it is in general. 
+/*
+ * This class is used to manage the income and expense classes. 
+ */
 
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.Month;
+
+package MainPackage;
+
+
 import java.util.ArrayList;
 
 import costPackage.Expense;
@@ -15,49 +17,12 @@ import costPackage.sortedExpense;
 public class costMonth {
 	
 	
-	// The Expense, Income, and theDate objects required to make costMonth work. Refer to classes for how they work.
+	// The expense, income, and savings objects used for all functions.
 	Expense monthExpenses = new Expense();
 	Income monthIncome = new Income();
-
 	Savings savings = new Savings();
-	// Set values for use in dates.
-	LocalDate setDate;
-	LocalTime setTime = LocalTime.now();
-	int setDay;
-	Month setMonth;
-	int setYear;
 	
-	int dateCheck;
-	
-	// To be used to calculate income - not in use yet.
-	LocalDate lastCheckDate;
-	
-	// Sets the date to the current day when the month is created. 
-	public costMonth() {
-		
-		
-	}
-	
-	
-	public void saveAt(String fileLocation, int savings) {
-		// Add category save load here.
-		
-	}
-	
-	public void loadAt(String fileLocation) {
-		// add loading in category here.
-	}
-	
-	// Used for automated checking if this date has already been used. Will be used in costYear.
-	public void setCheck() {
-		dateCheck++;
-	}
-	// Used for checking if this month has been used. 
-	public int returnCheck() {
-		return dateCheck;
-	}
-	
-	
+
 	// Create a new expense in the monthExpenses object.
 	public void newExpense(String newName, double newValue, String newCategory) {
 		monthExpenses.newExpense(newName, newValue, newCategory);
@@ -69,15 +34,8 @@ public class costMonth {
 		monthIncome.newIncome(newName, newValue, newLap);
 	}
 	
-	// Prints out an expense based on the string entered.
-	public String findExpense(String Expense) {
-		String returnExpenseName = monthExpenses.findExpenseNames(Expense);
-		double returnExpenseCost = monthExpenses.findExpenseCost(Expense);
-		String returnExpenseCategory = monthExpenses.findExpenseCategory(Expense);
-		String newString = "The Expense is: " + returnExpenseName + " and the cost is " + returnExpenseCost + ", and the category is " + returnExpenseCategory + ". "; 
-		return newString;
-	}
 	
+	// Finds the expense at index Number.
 	public String findExpenseCount(int Number) {
 		String returnExpenseName = monthExpenses.returnExpenseName(Number);
 		double returnExpenseCost = monthExpenses.returnExpenseValue(Number);
@@ -85,29 +43,16 @@ public class costMonth {
 		String newString = Number + 1 + ": " + returnExpenseName + " $" + returnExpenseCost + ", Category: " + returnExpenseCategory + ". "; 
 		return newString;
 	}
+	
+	// Returns the length of the expenses arrays.
 	public int findExpenseLength() {
 		return monthExpenses.returnExpenseLength();
 	}
+	// Returns the length of the income arrays.
 	public int findIncomeLength() {
 		return monthIncome.returnIncomeLength();
 	}
 
-	
-	public String findIncome(String Income) {
-		String returnIncomeName = monthIncome.findIncomeNames(Income);
-		double returnIncomeValue = monthIncome.findIncomeCost(Income);
-		double returnIncomeCycle = monthIncome.findIncomeLap(Income);
-		String newString = returnIncomeName + " $" + returnIncomeValue + " and it pays out every " + returnIncomeCycle + " days.";
-		return newString;
-	}
-	
-	public String findIncomeCount(int Num) {
-		String returnIncomeName = monthIncome.returnIncomeName(Num);
-		double returnIncomeValue = monthIncome.returnIncomeValue(Num);
-		double returnIncomeCycle = monthIncome.returnIncomeLap(Num);
-		String newString = Num + 1 + ": " + returnIncomeName + " $" + returnIncomeValue + ", Cycle: " + returnIncomeCycle + " days.";
-		return newString;
-	}
 	
 	// Returns the balance of income and expenses calculated together as a double.
 	public double getBalance() {
@@ -115,68 +60,42 @@ public class costMonth {
 		return balance;
 	}
 	
-	public double returnIncomeTotal() {
-		return monthIncome.returnTotalCost();
-	}
-	
+	// Returns the total expenses value so far. 
 	public double returnExpenseTotal() {
 		return monthExpenses.returnTotalCost();
 	}
 	
-	
+	// Sets the setSavings value in the savings class.
 	public void setSetSavings(double newSavings) {
 		savings.setSavings(newSavings);
 	}
 	
+	// Obtains the setSavings value in the savings class.
 	public double getSetSavings() {
 		return savings.getSavings();
 	}
 	
-
-	
-	public double checkSavings(Savings saving) {
-		double save = saving.getSavings();
-		double balance = getBalance();
-		if (balance + save < 0) {
-			return save + balance;
-		} else if (balance < 0) {
-			return save + balance;
-		} else {
-			return save;
-		}
-		
-	}
-	
-	public Expense returnExpense() {
-		return monthExpenses;
-	}
-	
-	public Income returnIncome() {
-		return monthIncome;
-	}
-	
+	// Returns the ArrayList<String> for the incomeDisplay value in the Income class.
 	public ArrayList<String> incomeDisplay() {
 		return monthIncome.returnDisplayedIncome();
 	}
 	
+	// Returns the ArrayList<String> expenseDisplay for the Expense class.
 	public ArrayList<String> expenseDisplay() {
 		return monthExpenses.returnDisplayed();
 	}
 	
+	// Removes income at index x in all of the income array lists.
 	public void removeIncome(int x) {
 		monthIncome.removeIncome(x);
 	}
 	
+	// Removes expense at index x for all the expense array lists.
 	public void removeExpense(int x){
 		monthExpenses.expenseRemove(x);
 	}
 	
-	public double totalIncome() {
-		return monthIncome.returnTotalCost();
-	}
-	
-	
-	
+	// Returns the total calculated income value of all of the total income. Refer to the income method getTotal();
 	public double calcTotalIncome() {
 		int x = 0;
 		
@@ -188,6 +107,8 @@ public class costMonth {
 	}
 	
 	
+	// Used in the maainClass method sortExpense(). Takes all of the expenses equaling the category provided, and adds it to a sortedExpense, 
+	// which is then added into a sortedExpense array list, that is returned to to the sortExpense() method.
 	public ArrayList<sortedExpense> categorizedExpense(String category) {
 		ArrayList<sortedExpense> sortedList = new ArrayList<sortedExpense>();
 		for (int x = 0; x < monthExpenses.returnExpenseLength(); x++) {
@@ -200,57 +121,38 @@ public class costMonth {
 		}
 		return sortedList;
 	}
-	
-	public Expense getExpense() {
-		return monthExpenses;
-	}
-	public Income getIncome() {
-		return monthIncome;
-	}
-	
-	public Savings getSaving() {
-		return savings;
-	}
-	
-	public void setExpense(Expense newExpense) {
-		monthExpenses = newExpense;
-	}
-	public void setIncome(Income newIncome) {
-		monthIncome = newIncome;
-	}
-	public void setSaving(Savings newSaving) {
-		savings = newSaving;
-	}
-	
-	
+		
+	// Gets the name of an expense at index x.
 	public String getExpenseName(int x) {
 		return monthExpenses.returnCostName(x);
 	}
 	
+	// Gets the value of an expense at index x.
 	public Double getExpenseValue(int x) {
 		return monthExpenses.returnCostValue(x);
 	}
 	
+	// Gets the category of an expense at index x.
 	public String getExpenseCategory(int x) {
 		return monthExpenses.returnExpenseCategory(x);
 	}
 	
+	// Gets the name of an income at index x.
 	public String getIncomeName(int x) {
 		return monthIncome.returnCostName(x);
 	}
 	
+	// Gets the value of an income at index x.
 	public Double getIncomeValue(int x) {
 		return monthIncome.returnIncomeValue(x);
 	}
 	
+	// Gets the incomeLap of an income at index x.
 	public Double getIncomeLap(int x) {
 		return monthIncome.returnIncomeLap(x);
 	}
 	
-	public void refreshDisplayed() {
-		monthIncome.refreshIncomeDisplay();
-		monthExpenses.refreshExpenseDisplay();
-	}
+
 	
 	
 	

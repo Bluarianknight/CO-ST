@@ -1,4 +1,8 @@
 package costPackage;
+/*
+ * This class manages the set savings value. It currently only contains that value.
+ */
+
 
 public class Savings {
 	double Saving;
@@ -6,11 +10,13 @@ public class Savings {
 		Saving = 0;
 		
 	}
-	// This class is broken, doesn't work as intended.
+	
+	// Sets the Saving value to newNum.
 	public void setSavings(double newNum) {
 		Saving = newNum;
 	}
 	
+	// Returns the Saving value.
 	public double getSavings() {
 		return Saving;
 	}

@@ -1,32 +1,34 @@
 package costPackage;
 import java.util.ArrayList;
 
-// Expense class made for expenses. Used BaseCash method for most of it - many of the methods are simply BaseCash methods but renamed, or tweaked.
+/*
+ * A class made to handle expenses. Has four array lists, three extended from baseCash.
+ * a name array, a cost value array, a displayName array, and a category Array, that handles the category of the expense.
+ * 
+ */
+
 public class Expense extends BaseCash {
-	// expenseCategory - to help sort the expenses. Not implemented fully currently.
+	// expenseCategory - Sorts the expenses into various categories. 
 	private ArrayList<String> expenseCategory = new ArrayList<String>();
 	
 	public Expense (){
 		
 	}
-	// Adds a new expense, taking a String and double value for cost and name.
+	// Adds a new expense, taking a String and double value for cost, and a String for the category. It then converts this into the displayed value.
 	public void newExpense(String newName, double newCost, String newCategory) {
 		this.setBase(newCost, newName);
 		setCategory(newCategory);
 		this.setDisplayed(expenseCategory.size() + ": " + newName +  " - $" + newCost + " - category: " + newCategory);
 	}
 	
-	public void refreshExpenseDisplay() {
-		for (int i = 0; i < expenseCategory.size(); i++) {
-			this.setDisplayed(expenseCategory.size() + ": " + this.returnCostName(i) +  " - $" + this.returnCostValue(i) + " - category: " + this.returnExpenseCategory(i));
-		}
-	}
+	
 	
 	// Returns the variable of CostValue at Where.
 	public double returnExpenseValue(int Where) {
 		return super.returnCostValue(Where);
 	}
 	
+	// Removes from all arrays at index x.
 	public void expenseRemove(int x) {
 		this.removeAt(x);
 		expenseCategory.remove(x);
@@ -37,39 +39,23 @@ public class Expense extends BaseCash {
 		return super.returnCostName(Where);
 	}
 	
+	// Returns the displayed String at index Where.
 	public String returnDisplayed(int Where) {
 		return super.returnDisplayed(Where);
 	}
 	
+	// Returns the category as a string at index Where.
 	public String returnExpenseCategory(int Where) {
 		return expenseCategory.get(Where);
 	}
 	
+	// Returns the length of the expense arrays.
 	public int returnExpenseLength() {
 		return this.returnLength();
 	}
 	
-	// Uses findCostNamesLocation, refer to BaseCash for documentation.
-	public int findExpenseNamesLocation(String What) {
-			return findCostNamesLocation(What);
-	}
 	
-	// Returns the name of a value if it exists. It only exists for use for findExpense in costMonth.
-	public String findExpenseNames(String What) {
-		return getCostName(What);
-	}
-	
-	// Returns the cost of the String What if it exists as an expense. 
-	public Double findExpenseCost(String What) {
-		return this.getCost(What);
-	}
-	
-	// Returns the category of an expense if it exists.
-	public String findExpenseCategory(String What) {
-		return expenseCategory.get(findExpenseNamesLocation(What));
-	}
-	
-	// Sets the category. 
+	// Sets the category between six values. If it cannot be read, it defaults to "other".
 	public void setCategory(String newCategory) {
 		switch (newCategory.toLowerCase()) {
 		case "housing":
@@ -87,8 +73,7 @@ public class Expense extends BaseCash {
 			break;
 		
 		default:
-			System.out.println("System cannot categorize. Error.");
-			expenseCategory.add("ERROR");
+			expenseCategory.add("other");
 			break;
 		}
 	}
