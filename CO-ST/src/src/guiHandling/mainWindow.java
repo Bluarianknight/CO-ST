@@ -185,9 +185,9 @@ public class mainWindow implements ActionListener {
 		// Displays the income list, alongside the controls for it.
 		JScrollPane incomeListScrollPane = new JScrollPane();
 		incomeListScrollPane.setPreferredSize(new Dimension(400, 300));
-		incomeListScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		incomeListScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		Income.add(incomeListScrollPane, BorderLayout.EAST);
+		displayedList.setVisibleRowCount(999);
 		displayedList.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		
 		
@@ -235,7 +235,7 @@ public class mainWindow implements ActionListener {
 		Summary.add(balText);
 		
 		// Displays the current balance of the user.
-		balTextValue = new JLabel("$0.00");
+		balTextValue = new JLabel("$0.0");
 		balTextValue.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		Summary.add(balTextValue);
 		
@@ -249,7 +249,7 @@ public class mainWindow implements ActionListener {
 		Summary.add(incomeText);
 		
 		// Displays the current total income of the user. 
-		incomeTextValue = new JLabel("$0.00");
+		incomeTextValue = new JLabel("$0.0");
 		incomeTextValue.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		Summary.add(incomeTextValue);
 		
@@ -308,7 +308,7 @@ public class mainWindow implements ActionListener {
 		savingsText.setHorizontalAlignment(SwingConstants.CENTER);
 		savingsGoalPanel.add(savingsText);
 		
-		savingsValueText = new JLabel("$0.00");
+		savingsValueText = new JLabel("$0.0");
 		savingsValueText.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		savingsGoalPanel.add(savingsValueText);
 		savingsPanel.add(currentSavingsPanel);
@@ -319,7 +319,7 @@ public class mainWindow implements ActionListener {
 		currentSavingsText.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		currentSavingsPanel.add(currentSavingsText);
 		
-		currentSavingsValue = new JLabel("$0.00");
+		currentSavingsValue = new JLabel("$0.0");
 		currentSavingsValue.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		currentSavingsPanel.add(currentSavingsValue);
 		
@@ -428,10 +428,10 @@ public class mainWindow implements ActionListener {
 		
 		// This panel handles the main expense list, and it's controls.
 		JScrollPane expenseListPane = new JScrollPane();
-		expenseListPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		expenseListPane.setPreferredSize(new Dimension(400, 300));
 		expenseListPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		Expenses.add(expenseListPane, BorderLayout.EAST);
+		expenseDisplay.setVisibleRowCount(999);
 		
 		
 		expenseDisplay.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -479,7 +479,7 @@ public class mainWindow implements ActionListener {
 		balText_1.setFont(new Font("Tahoma", Font.BOLD, 16));
 		summaryExpense.add(balText_1);
 		
-		balTextValue_1 = new JLabel("$0.00");
+		balTextValue_1 = new JLabel("$0.0");
 		balTextValue_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		summaryExpense.add(balTextValue_1);
 		
@@ -492,16 +492,16 @@ public class mainWindow implements ActionListener {
 		expenseText.setFont(new Font("Tahoma", Font.BOLD, 16));
 		summaryExpense.add(expenseText);
 		
-		ExpenseTextValue = new JLabel("$0.00");
+		ExpenseTextValue = new JLabel("$0.0");
 		ExpenseTextValue.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		summaryExpense.add(ExpenseTextValue);
 		
 		// This scrollPane is used for the 'sort expenses' list.
 		JScrollPane sortPane = new JScrollPane();
-		sortPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		sortPane.setPreferredSize(new Dimension(400, 300));
 		sortPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		Expenses.add(sortPane, BorderLayout.WEST);
+		sortedDisplay.setVisibleRowCount(999);
 		
 		
 		sortedDisplay.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -826,18 +826,22 @@ public class mainWindow implements ActionListener {
 	// Deletes the selected variable in the listed list, which is held in displayedList. Takes the indexed variable, then calls the mainClass function removeIncome();
 	public void deleteIncome() {
 		if (listed.size() != 0) {
-			System.out.println("Delete");
+
+			if (displayedList.getSelectedIndex() != -1){
 			newYear.removeIncome(displayedList.getSelectedIndex());
 			refreshIncome();
+			}
 		}
 	}
 	
 	// The same as deleteIncome but for expenses, in the listedE list, which is held in 
 	public void deleteExpense() {
 		if (listedE.size() != 0) {
-			System.out.println("Delete");
+
+			if (expenseDisplay.getSelectedIndex() != -1) {
 			newYear.removeExpense(expenseDisplay.getSelectedIndex());
 			refreshExpense();
+			}
 		}
 	}
 	
